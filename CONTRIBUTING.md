@@ -57,6 +57,7 @@ We use [Conventional Commits](https://www.conventionalcommits.org/):
 ```
 
 **Types:**
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation only
@@ -67,6 +68,7 @@ We use [Conventional Commits](https://www.conventionalcommits.org/):
 - `chore`: Changes to build process or auxiliary tools
 
 **Examples:**
+
 ```
 feat(auth): add JWT authentication
 fix(api): resolve null pointer exception in user service
@@ -136,6 +138,7 @@ npm run dev
 ## Recognition
 
 Contributors will be recognized in:
+
 - README.md contributors section
 - Release notes
 - Project credits
