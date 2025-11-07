@@ -203,11 +203,6 @@ the AI full project context without manual prompting.
 ✅ DevOps / infra-as-code repositories  
 ✅ Chat / messaging bots (optional – not assumed)
 
-- Sumber gambar sementara: Unsplash (lisensi bebas pakai, atribusi dihargai)
-- Chatbot: https://unsplash.com/photos/photo-1603354350317-6f7aaa591d35
-- Finansial: https://unsplash.com/photos/photo-1559526324-593bc073d938
-- Potret profesional: https://unsplash.com/photos/photo-1544005313-94ddf0286df2
-
 ---
 
 ### DO:

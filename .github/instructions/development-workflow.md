@@ -4,7 +4,10 @@
 
 ```bash
 npm install
-npm start  # Displays QR code - scan with WhatsApp to link
+npm start  # Start development server
+# OR for other stacks:
+# python -m venv venv && source venv/bin/activate && pip install -r requirements.txt
+# python app.py
 ```
 
 ## Development Commands
@@ -30,20 +33,20 @@ git push
 
 **CRITICAL:** Always run `npm run check` before pushing!
 
-## VPS Deployment
+## VPS Deployment (Optional)
 
-- Use `install-vps.sh` for automated setup (Node.js, Chromium, dependencies)
-- Use PM2 for process management: `pm2 start index.js --name whatsapp-bot`
-- Sessions auto-cleanup every 10 minutes; inactive sessions expire after 30 minutes
+- Use automated setup scripts if available
+- Use PM2 for process management: `pm2 start index.js --name my-app`
+- Configure auto-restart and log rotation
 
 ### PM2 Commands
 
 ```bash
-pm2 start index.js --name whatsapp-bot   # Start bot
-pm2 logs whatsapp-bot                     # View logs
-pm2 restart whatsapp-bot                  # Restart bot
-pm2 stop whatsapp-bot                     # Stop bot
-pm2 delete whatsapp-bot                   # Remove from PM2
+pm2 start index.js --name my-app   # Start application
+pm2 logs my-app                    # View logs
+pm2 restart my-app                 # Restart application
+pm2 stop my-app                    # Stop application
+pm2 delete my-app                  # Remove from PM2
 ```
 
 ## GitHub Actions Workflows
@@ -91,7 +94,7 @@ npm run check         # Lint + test (pre-commit)
 ### Test Patterns
 
 - Use AAA pattern (Arrange-Act-Assert)
-- Mock external dependencies (Redis, WhatsApp client, file system)
+- Mock external dependencies (Redis, external API client, file system)
 - Test edge cases (null, undefined, empty strings, large values)
 - Each new feature requires corresponding tests
 - Target: 80%+ code coverage
@@ -99,7 +102,7 @@ npm run check         # Lint + test (pre-commit)
 ### Example Test Structure
 
 ```javascript
-describe("ServiceName", () => {
+describe('ServiceName', () => {
   let service;
   let mockDependency;
 
@@ -108,21 +111,21 @@ describe("ServiceName", () => {
     service = new ServiceName(mockDependency);
   });
 
-  describe("methodName()", () => {
-    test("should handle valid input", () => {
+  describe('methodName()', () => {
+    test('should handle valid input', () => {
       // Arrange
-      const input = "valid";
-      mockDependency.method.mockReturnValue("result");
+      const input = 'valid';
+      mockDependency.method.mockReturnValue('result');
 
       // Act
       const result = service.methodName(input);
 
       // Assert
-      expect(result).toBe("expected");
+      expect(result).toBe('expected');
       expect(mockDependency.method).toHaveBeenCalledWith(input);
     });
 
-    test("should handle invalid input", () => {
+    test('should handle invalid input', () => {
       expect(() => service.methodName(null)).toThrow();
     });
   });
@@ -133,7 +136,8 @@ describe("ServiceName", () => {
 
 ## Feature Documentation Workflow (MANDATORY)
 
-**CRITICAL:** For any new feature request or modification, you **MUST** follow this two-stage documentation cycle:
+**CRITICAL:** For any new feature request or modification, you **MUST** follow this two-stage
+documentation cycle:
 
 ### Stage 1: Implementation Plan (BEFORE coding)
 
@@ -159,8 +163,7 @@ describe("ServiceName", () => {
 ```markdown
 # Implementation Plan: [Feature Name]
 
-**Created:** November 6, 2025, 10:00 AM
-**Status:** Planning
+**Created:** November 6, 2025, 10:00 AM **Status:** Planning
 
 ## Requirements Analysis
 
@@ -190,7 +193,7 @@ describe("ServiceName", () => {
 
 - Unit tests for NewHandler (20+ tests)
 - Integration test for complete flow
-- Manual testing with real WhatsApp messages
+- Manual testing with real application messages
 ```
 
 **Process:**
@@ -228,13 +231,12 @@ describe("ServiceName", () => {
 ```markdown
 ## Implementation Summary
 
-**Completed:** November 6, 2025, 2:30 PM
-**Status:** ✅ Success
+**Completed:** November 6, 2025, 2:30 PM **Status:** ✅ Success
 
 ### Final Result
 
-Feature successfully implemented with all tests passing (1121/1124).
-New feature adds X functionality with Y performance.
+Feature successfully implemented with all tests passing (1121/1124). New feature adds X
+functionality with Y performance.
 
 ### Change Summary
 
@@ -249,13 +251,11 @@ New feature adds X functionality with Y performance.
 - lib/messageRouter.js - Added routing logic (lines 123-145)
 - src/config/app.config.js - Added feature flag
 
-**Tests Added:** +45 tests (all passing)
-**Coverage:** Increased from 45% → 47%
+**Tests Added:** +45 tests (all passing) **Coverage:** Increased from 45% → 47%
 
 ### Deviations from Plan
 
-- Originally planned to use ServiceX, but switched to ServiceY
-  for better performance (3x faster)
+- Originally planned to use ServiceX, but switched to ServiceY for better performance (3x faster)
 - Added caching layer not in original plan (improves response time)
 
 ### Additional Instructions
@@ -305,12 +305,12 @@ New feature adds X functionality with Y performance.
 Create `.env` file:
 
 ```bash
-# WhatsApp
+# Application
 USE_PAIRING_CODE=false           # true for pairing code, false for QR
 PAIRING_PHONE_NUMBER=            # Phone number for pairing (e.g., 6281234567890)
 
 # Admin
-ADMIN_NUMBER=6281234567890       # Admin WhatsApp number
+ADMIN_NUMBER=6281234567890       # Admin Application number
 
 # Payment (Xendit)
 XENDIT_API_KEY=your_key_here

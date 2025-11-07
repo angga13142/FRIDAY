@@ -148,8 +148,6 @@ echo "────────────────────────�
 # Search for common project-specific patterns
 PATTERNS=(
   "Portfolio"
-  "CRM Dashboard"
-  "chatbot"
   "WhatsApp"
   "Next.js.*Dashboard"
   "Astro.*Portfolio"
