@@ -9,6 +9,91 @@
 
 set -e
 
+# Parse arguments
+AUTO_MODE=false
+PROJECT_NAME=""
+PROJECT_TYPE=""
+TECH_STACK=""
+PRIMARY_LANGUAGE=""
+FRAMEWORK=""
+
+show_help() {
+    cat << EOF
+Usage: $0 [OPTIONS]
+
+Customize FRIDAY AI Assistant template for your project.
+
+OPTIONS:
+    --auto                  Non-interactive mode (requires all flags below)
+    --name <name>          Project name
+    --type <type>          Project type (web/mobile/api/cli/chatbot)
+    --stack <stack>        Tech stack (e.g., "Node.js + Express")
+    --lang <language>      Primary language (JavaScript/TypeScript/Python/etc)
+    --framework <fw>       Framework (Express/FastAPI/Next.js/etc)
+    -h, --help             Show this help message
+
+EXAMPLES:
+    # Interactive mode (default)
+    bash customize.sh
+
+    # Non-interactive mode
+    bash customize.sh --auto \\
+      --name "MyApp" \\
+      --type "web" \\
+      --stack "Next.js + TypeScript" \\
+      --lang "TypeScript" \\
+      --framework "Next.js"
+
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --auto)
+            AUTO_MODE=true
+            shift
+            ;;
+        --name)
+            PROJECT_NAME="$2"
+            shift 2
+            ;;
+        --type)
+            PROJECT_TYPE="$2"
+            shift 2
+            ;;
+        --stack)
+            TECH_STACK="$2"
+            shift 2
+            ;;
+        --lang)
+            PRIMARY_LANGUAGE="$2"
+            shift 2
+            ;;
+        --framework)
+            FRAMEWORK="$2"
+            shift 2
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+# Validate auto mode has all required args
+if [ "$AUTO_MODE" = true ]; then
+    if [ -z "$PROJECT_NAME" ] || [ -z "$PROJECT_TYPE" ] || [ -z "$TECH_STACK" ] || [ -z "$PRIMARY_LANGUAGE" ] || [ -z "$FRAMEWORK" ]; then
+        echo "❌ Error: --auto mode requires all flags (--name, --type, --stack, --lang, --framework)"
+        show_help
+        exit 1
+    fi
+fi
+
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "🤖 FRIDAY AI Assistant - Project Customization"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -17,20 +102,21 @@ echo "Good day! I'm FRIDAY, your AI development assistant."
 echo "Let me help you customize this template for your project."
 echo ""
 
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "🎨 AI Assistant Template - Customization Wizard"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo ""
+# Interactive mode: collect information
+if [ "$AUTO_MODE" = false ]; then
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "🎨 AI Assistant Template - Customization Wizard"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "Let's customize your AI assistant configuration!"
+    echo ""
 
-# Collect project information
-echo "Let's customize your AI assistant configuration!"
-echo ""
-
-read -p "📝 Project Name (e.g., My Awesome Project): " PROJECT_NAME
-read -p "🏷️  Project Type (web/mobile/api/cli/chatbot): " PROJECT_TYPE
-read -p "🛠️  Tech Stack (e.g., Node.js + Express): " TECH_STACK
-read -p "💻 Primary Language (JavaScript/TypeScript/Python/etc): " PRIMARY_LANGUAGE
-read -p "🎯 Framework (e.g., Express/FastAPI/Next.js): " FRAMEWORK
+    read -p "📝 Project Name (e.g., My Awesome Project): " PROJECT_NAME
+    read -p "🏷️  Project Type (web/mobile/api/cli/chatbot): " PROJECT_TYPE
+    read -p "🛠️  Tech Stack (e.g., Node.js + Express): " TECH_STACK
+    read -p "💻 Primary Language (JavaScript/TypeScript/Python/etc): " PRIMARY_LANGUAGE
+    read -p "🎯 Framework (e.g., Express/FastAPI/Next.js): " FRAMEWORK
+fi
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -44,11 +130,16 @@ echo "Framework:        $FRAMEWORK"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-read -p "✅ Looks good? (y/n): " CONFIRM
+# Skip confirmation in auto mode
+if [ "$AUTO_MODE" = false ]; then
+    read -p "✅ Looks good? (y/n): " CONFIRM
 
-if [ "$CONFIRM" != "y" ]; then
-    echo "❌ Customization cancelled"
-    exit 1
+    if [ "$CONFIRM" != "y" ]; then
+        echo "❌ Customization cancelled"
+        exit 1
+    fi
+else
+    echo "✅ Auto mode: Proceeding with configuration..."
 fi
 
 echo ""
@@ -136,52 +227,58 @@ EOF
 # GitHub Copilot CLI (optional installation) #
 #############################################
 
-echo ""
-echo "🧰 Installing GitHub Copilot CLI (optional)"
-echo "-----------------------------------------"
+# Skip interactive prompts in auto mode
+if [ "$AUTO_MODE" = false ]; then
+    echo ""
+    echo "🧰 Installing GitHub Copilot CLI (optional)"
+    echo "-----------------------------------------"
 
-install_copilot_cli() {
-    if command -v npm >/dev/null 2>&1; then
-        echo "Attempting to install @githubnext/github-copilot-cli globally via npm..."
-        if npm install -g @githubnext/github-copilot-cli >/dev/null 2>&1; then
-            echo "  ✅ Copilot CLI installed (github-copilot-cli)"
+    install_copilot_cli() {
+        if command -v npm >/dev/null 2>&1; then
+            echo "Attempting to install @githubnext/github-copilot-cli globally via npm..."
+            if npm install -g @githubnext/github-copilot-cli >/dev/null 2>&1; then
+                echo "  ✅ Copilot CLI installed (github-copilot-cli)"
+            else
+                echo "  ⚠️  Failed to install Copilot CLI via npm. You can retry later: npm i -g @githubnext/github-copilot-cli"
+                return 1
+            fi
         else
-            echo "  ⚠️  Failed to install Copilot CLI via npm. You can retry later: npm i -g @githubnext/github-copilot-cli"
+            echo "  ⚠️  npm not found. Skipping Copilot CLI installation."
             return 1
         fi
-    else
-        echo "  ⚠️  npm not found. Skipping Copilot CLI installation."
-        return 1
-    fi
-}
+    }
 
-if install_copilot_cli; then
-    echo ""
-    echo "🔐 Copilot CLI authentication"
-    echo "You'll be prompted to authenticate in your browser."
-    read -p "Proceed to login now? (y/n): " DO_COPILOT_LOGIN
-    if [ "$DO_COPILOT_LOGIN" = "y" ]; then
-        if command -v github-copilot-cli >/dev/null 2>&1; then
-            github-copilot-cli auth login || true
-        else
-            echo "  ⚠️  Copilot CLI binary not found after install. Skipping login."
+    if install_copilot_cli; then
+        echo ""
+        echo "🔐 Copilot CLI authentication"
+        echo "You'll be prompted to authenticate in your browser."
+        read -p "Proceed to login now? (y/n): " DO_COPILOT_LOGIN
+        if [ "$DO_COPILOT_LOGIN" = "y" ]; then
+            if command -v github-copilot-cli >/dev/null 2>&1; then
+                github-copilot-cli auth login || true
+            else
+                echo "  ⚠️  Copilot CLI binary not found after install. Skipping login."
+            fi
         fi
     fi
-fi
 
-#############################################
-# GitHub CLI Copilot (optional, if available)
-#############################################
+    #############################################
+    # GitHub CLI Copilot (optional, if available)
+    #############################################
 
-echo ""
-echo "🧰 Checking GitHub CLI (gh) and Copilot extension"
-if command -v gh >/dev/null 2>&1; then
-    echo "  ✅ gh detected"
-    echo "  Installing gh copilot extension (if missing)..."
-    gh extension install github/gh-copilot >/dev/null 2>&1 || true
-    echo "  You may run: gh auth login    # to authenticate GitHub CLI"
+    echo ""
+    echo "🧰 Checking GitHub CLI (gh) and Copilot extension"
+    if command -v gh >/dev/null 2>&1; then
+        echo "  ✅ gh detected"
+        echo "  Installing gh copilot extension (if missing)..."
+        gh extension install github/gh-copilot >/dev/null 2>&1 || true
+        echo "  You may run: gh auth login    # to authenticate GitHub CLI"
+    else
+        echo "  ℹ️  GitHub CLI (gh) not found. Skipping gh copilot setup."
+    fi
 else
-    echo "  ℹ️  GitHub CLI (gh) not found. Skipping gh copilot setup."
+    echo ""
+    echo "⏩ Auto mode: Skipping optional Copilot CLI installation"
 fi
 
 ############################################################
@@ -281,19 +378,28 @@ BASH
 
 chmod +x .github/scripts/auto-update-copilot-instructions.sh
 
-echo ""
-read -p "⏱️  Setup daily auto-update at 01:00 using cron? (y/n): " SET_CRON
-if [ "$SET_CRON" = "y" ]; then
-    SCRIPT_PATH="$(pwd)/.github/scripts/auto-update-copilot-instructions.sh"
-    # Remove previous entries for this script, then add new
-    ( crontab -l 2>/dev/null | grep -v "$SCRIPT_PATH" ; echo "0 1 * * * bash $SCRIPT_PATH >> $(pwd)/.github/scripts/auto-update.log 2>&1" ) | crontab -
-    echo "  ✅ Cron installed: daily at 01:00"
-fi
+if [ "$AUTO_MODE" = false ]; then
+    echo ""
+    read -p "⏱️  Setup daily auto-update at 01:00 using cron? (y/n): " SET_CRON
+    if [ "$SET_CRON" = "y" ]; then
+        SCRIPT_PATH="$(pwd)/.github/scripts/auto-update-copilot-instructions.sh"
+        # Remove previous entries for this script, then add new
+        ( crontab -l 2>/dev/null | grep -v "$SCRIPT_PATH" ; echo "0 1 * * * bash $SCRIPT_PATH >> $(pwd)/.github/scripts/auto-update.log 2>&1" ) | crontab -
+        echo "  ✅ Cron installed: daily at 01:00"
+    fi
 
-echo ""
-read -p "▶️  Run the auto-update once now? (y/n): " RUN_NOW
-if [ "$RUN_NOW" = "y" ]; then
-    bash .github/scripts/auto-update-copilot-instructions.sh || true
+    echo ""
+    read -p "▶️  Run the auto-update once now? (y/n): " RUN_NOW
+    if [ "$RUN_NOW" = "y" ]; then
+        bash .github/scripts/auto-update-copilot-instructions.sh || true
+    fi
+else
+    # Auto mode: setup cron silently
+    echo ""
+    echo "⏩ Auto mode: Setting up daily auto-update cron..."
+    SCRIPT_PATH="$(pwd)/.github/scripts/auto-update-copilot-instructions.sh"
+    ( crontab -l 2>/dev/null | grep -v "$SCRIPT_PATH" ; echo "0 1 * * * bash $SCRIPT_PATH >> $(pwd)/.github/scripts/auto-update.log 2>&1" ) | crontab - 2>/dev/null || echo "  ⚠️  Cron setup skipped (not available)"
+    echo "  ✅ Daily auto-update scheduled at 01:00"
 fi
 
 
