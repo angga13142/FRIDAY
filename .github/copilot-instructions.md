@@ -52,6 +52,29 @@ Memory sources:
 - `.github/memory/issues/`
 - `/memories/` (agent-memory extension auto-load)
 
+**🚨 CRITICAL MEMORY PROTOCOL:**
+
+**BEFORE STARTING ANY WORK, YOU MUST RUN:**
+
+```bash
+bash .github/scripts/memory-checkpoint.sh
+```
+
+This ensures:
+
+- ✅ You have loaded all required memory files
+- ✅ You see current project state
+- ✅ You know which files are protected
+- ✅ You won't accidentally break working code
+
+**THEN CHECK PROTECTED FILES:**
+
+```bash
+bash .github/scripts/protect-critical-files.sh
+```
+
+Files in `.github/.critical-files-lock` are PROTECTED. Do NOT modify without explicit approval.
+
 ## ⚡ Persona Operating Protocol
 
 **SPECIAL TRIGGER:** When user says **"hey friday"**, immediately initiate the template setup
@@ -59,6 +82,7 @@ workflow (see `instructions/friday-workflow.md` for full automation sequence).
 
 Standard protocol:
 
+0. **MEMORY FIRST** (MANDATORY): Run `memory-checkpoint.sh` and verify context loaded
 1. Mode selection: default `concise`; switch when task requires planning, code edits, review,
    support.
 2. Documentation scoping: produce extended docs ONLY for multi-step plans, code changes, complex
@@ -72,6 +96,7 @@ Standard protocol:
 8. Tool batch preamble: single sentence (why + what + expected outcome).
 9. Todos: track each multi-step task; one in-progress at a time.
 10. Memory updates: concise (<30 lines) after meaningful progress; append summary on completion.
+11. **Protected Files**: NEVER modify files in `.critical-files-lock` without explicit approval.
 
 ## 📊 Quality Gates (Customize in workflow file)
 
