@@ -1,7 +1,8 @@
-# Memory Index - Personal Portfolio - Muhammad Nurhidayat Gani
+# Memory Index - {{PROJECT_NAME}}
 
-**Last Updated:** November 6, 2025  
-**Total Files:** 16 files organized in 4 categories
+**Last Updated:** {{DATE}}  
+**Project Type:** {{PROJECT_TYPE}}  
+**Total Files:** {{TOTAL_FILES}} organized in 4 categories
 
 ---
 
@@ -20,202 +21,119 @@
 
 ## 🚀 Recent Implementations
 
-### 1. [One-Click Deployment System](../../memories/one-click-deployment-system.md) ⭐ NEW
+### Example: Feature Implementation Template
 
-**Date:** November 6, 2025  
-**Status:** Complete & Tested  
-**Summary:** Sales-ready deployment system with auto-installer script
+**Date:** YYYY-MM-DD  
+**Status:** Complete / In Progress  
+**Summary:** Brief description of what was implemented
 
-**Key Files:**
+**Key Components:**
+- Component 1 - Description
+- Component 2 - Description
 
-- `deploy-fresh-server.sh` - 1-click installer (tested on 136.110.59.209)
-- `docs/FRESH_SERVER_DEPLOYMENT.md` - Customer deployment guide
-- `docs/SALES_PACKAGE.md` - 3 pricing tiers ($99/$249/$499)
-- `docs/SELLING_PLAN.md` - Complete selling strategy
+**Files Changed:**
+- `path/to/file.ext` - Description of changes
 
-**Testing:** ✅ 100% success (fresh server → running in 5 min)  
-**Revenue Potential:** $795-$8,940/month
-
-### 2. [Implementation Summary - Nov 6](implementations/implementation-summary-nov6-2025.md)
-
-Complete summary of all features implemented
-
-### 3. [Dynamic Product System](implementations/dynamic-product-implementation.md)
-
-Load products from text files (Netflix, Spotify, etc.)
-
-### 4. [Dynamic Payment System](implementations/dynamic-payment-implementation.md)
-
-Payment methods from `payment_methods/` directory
+**Tests Added:** X tests (all passing)  
+**Impact:** Description of impact / metrics
 
 ---
 
-## 📋 Project Documentation
+## 📋 Template Usage Guide
 
-### Core References
+This is a **template memory index**. After running `customize.sh` or "hey friday":
 
-| File                                                   | Purpose                          | Size  |
-| ------------------------------------------------------ | -------------------------------- | ----- |
-| [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md)   | Complete project overview        | 10KB  |
-| [current-state.md](current-state.md)                   | Current features & status        | 11KB  |
-| [code-patterns.md](code-patterns.md)                   | Coding patterns & best practices | 5.6KB |
-| [github-workflows-rules.md](github-workflows-rules.md) | CI/CD requirements               | 9.5KB |
-| [test-status.md](test-status.md)                       | Test coverage & status           | 5.4KB |
+1. **Replace placeholders:**
+   - `{{PROJECT_NAME}}` → Your project name
+   - `{{DATE}}` → Current date (YYYY-MM-DD)
+   - `{{PROJECT_TYPE}}` → web/api/mobile/cli/data-science/etc
+   - `{{TOTAL_FILES}}` → Actual file count
+   - `{{TECH_STACK}}` → Your technologies
+   - `{{PRIMARY_LANGUAGE}}` → Main language
+   - `{{FRAMEWORK}}` → Framework used
 
-### Persona Enhancements
+2. **Remove this template usage section**
 
-| File                                                  | Purpose                              |
-| ----------------------------------------------------- | ------------------------------------ |
-| ../../.github/instructions/persona-modes.md           | Response modes & documentation rules |
-| ../../.github/instructions/persona-guardrails.md      | Safety, tooling protocol, escalation |
-| ../../.github/instructions/persona-evals.md           | Evaluation rubric & scenarios        |
-| ../../.github/instructions/tooling-matrix.md          | Task→tool decision guide             |
-| ../../.github/instructions/persona-instrumentation.md | Feedback loop & logging template     |
-| ../../.github/instructions/persona-fewshots.md        | Canonical examples per mode          |
-
-### Active Files (Root)
-
-- **README.md** - Memory system overview
-- **user-preferences.md** - User settings & preferences
+3. **Add your actual implementations** using template format above
 
 ---
 
-## 🎯 Decisions & Architecture
+## 📚 Core Documentation (Customize After Setup)
 
-### [decisions/](decisions/)
+### Project References
 
-| File                        | Decision                    | Date        |
-| --------------------------- | --------------------------- | ----------- |
-| pricing-system-migration.md | Migrate to IDR-only pricing | Nov 3, 2025 |
-| protocol-update-summary.md  | Protocol improvements       | Nov 6, 2025 |
+| File | Purpose | Status |
+|------|---------|--------|
+| `current-state.md` | Current features & roadmap | Create after setup |
+| `PROJECT_DOCUMENTATION.md` | Complete overview | Optional |
 
----
+### Persona Configuration (Pre-configured)
 
-## 🐛 Issues & Troubleshooting
-
-### [issues/](issues/)
-
-| File                      | Issue                | Status   |
-| ------------------------- | -------------------- | -------- |
-| critical-bugs-pitfalls.md | Known bugs & gotchas | Active   |
-| git-remote-cleanup.md     | Git remote fixes     | Resolved |
+| File | Purpose |
+|------|---------|
+| `../.github/instructions/persona-modes.md` | Response modes |
+| `../.github/instructions/persona-guardrails.md` | Safety & tooling protocol |
+| `../.github/instructions/persona-evals.md` | Evaluation rubric |
+| `../.github/instructions/tooling-matrix.md` | Task→tool decision guide |
 
 ---
 
-## 📦 Archive
+## 🗂️ Memory Organization Tips
 
-### [archive/](archive/)
+### When to Create Files
 
-Completed or outdated documentation:
+**implementations/**
+- After completing a feature
+- File naming: `feature-name-YYYY-MM-DD.md`
+- Include: what, how, tests, impact
 
-- env-variables-integration.md
-- testing-framework-mocha.md
+**decisions/**
+- After making architecture choices
+- File naming: `decision-topic-YYYY-MM-DD.md`
+- Include: context, options, choice, rationale, consequences
 
----
+**issues/**
+- When fixing bugs
+- File naming: `bug-description-YYYY-MM-DD.md`
+- Include: problem, root cause, fix, test, prevention
 
-## 🔍 Quick Lookup
-
-### Need Information About...
-
-**Deployment?** → Check: `/memories/one-click-deployment-system.md`  
-→ See also: `docs/FRESH_SERVER_DEPLOYMENT.md`
-
-**Payment Integration?** → Check: `implementations/dynamic-payment-implementation.md`  
-→ See also: `docs/PAYMENT_SYSTEM.md`
-
-**Product Management?** → Check: `implementations/dynamic-product-implementation.md`  
-→ See also: `products_data/README.md`
-
-**Testing?** → Check: `test-status.md`  
-→ See also: `docs/TESTING_GUIDE.md`
-
-**CI/CD?** → Check: `github-workflows-rules.md`  
-→ See also: `.github/workflows/`
-
-**Bugs/Gotchas?** → Check: `issues/critical-bugs-pitfalls.md`  
-→ See also: `docs/TROUBLESHOOTING.md`
+**archive/**
+- Move completed items here monthly
+- Keeps INDEX clean and focused
 
 ---
 
-## 📊 Statistics
+## 🔍 Quick Lookup Template
 
-**Total Memory Files:** 16  
-**Total Size:** ~128KB  
-**Categories:** 4 (implementations, decisions, issues, archive)  
-**Active Projects:** 3 (deployment system, dynamic products, dynamic payments)
-
-**Test Coverage:** 45%+  
-**Tests Passing:** 1121/1124 (99.7%)  
-**Lint Status:** 0 errors ✅
-
----
-
-## 🔄 Update Protocol
-
-### When to Update Memory
-
-1. **After Major Implementation**
-
-   - Create file in `implementations/`
-   - Update this INDEX.md
-   - Link related docs
-
-2. **After Architecture Decision**
-
-   - Create file in `decisions/`
-   - Document rationale
-   - Reference in INDEX.md
-
-3. **When Bug Found**
-
-   - Document in `issues/`
-   - Include reproduction steps
-   - Link to fix commit
-
-4. **When Feature Complete**
-   - Move to `archive/` if outdated
-   - Update INDEX.md
-   - Clean up old references
-
-### Memory Naming Convention
-
-```
-Format: [category]-[topic]-[date].md
-
-Examples:
-- implementations/one-click-deployment-nov6-2025.md
-- decisions/architecture-refactor-nov1-2025.md
-- issues/payment-webhook-bug-nov3-2025.md
-```
+| Need Info About... | Check File |
+|-------------------|-----------|
+| Project status | `current-state.md` |
+| Recent work | `INDEX.md` (this file) |
+| How X was built | `implementations/x-*.md` |
+| Why we chose Y | `decisions/y-*.md` |
+| Bug Z fix | `issues/z-*.md` |
 
 ---
 
-## 🎓 For New AI Sessions
+## 📝 Maintenance Schedule
 
-**CRITICAL:** Always read these files first:
+**Weekly:** Review and update `current-state.md`  
+**Monthly:** Archive old implementations  
+**Quarterly:** Prune outdated decisions
 
-1. **This INDEX.md** - Quick overview
-2. **current-state.md** - Current features
-3. **Recent implementations/** - Latest work
-4. **github-workflows-rules.md** - CI/CD requirements
-
-**Then check:**
-
-- User preferences: `user-preferences.md`
-- Active issues: `issues/`
-- Code patterns: `code-patterns.md`
+Keep INDEX focused on **last 5-10 items** per category.
 
 ---
 
-## 📞 External References
+## 🎯 Success Indicators
 
-**Main Documentation:** `docs/` directory  
-**Copilot Instructions:** `.github/copilot-instructions.md`  
-**Memory Extension:** `/memories/` (agent-memory extension)  
-**GitHub Repo:** angga13142/chatbkt
+**Memory is working when:**
+- ✅ AI remembers past decisions
+- ✅ New team members understand "why"
+- ✅ No repeated mistakes
+- ✅ Context survives session resets
+- ✅ Debugging is faster (known issues doc)
 
 ---
 
-**Last Reviewed:** November 6, 2025  
-**Maintained By:** AI Agent (with agent-memory extension)  
-**Version:** 1.0.0
+**Remember:** Good memory = Good AI assistance! 🧠✨
