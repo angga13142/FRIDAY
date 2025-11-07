@@ -52,6 +52,41 @@ Memory sources:
 - `.github/memory/issues/`
 - `/memories/` (agent-memory extension auto-load)
 
+## 🧠 MANDATORY MEMORY PROTOCOL (CRITICAL)
+
+**⚠️ BEFORE RESPONDING TO ANY USER REQUEST:**
+
+You MUST silently load memory in this exact sequence:
+
+1. **Check & Load INDEX** (`.github/memory/INDEX.md`)
+
+   - If missing: Create minimal INDEX from project context
+   - Extract: Project name, type, tech stack, current phase
+
+2. **Check & Load STATE** (`.github/memory/current-state.md`)
+
+   - If missing: Warn user once, proceed with INDEX context only
+   - Extract: Current focus, recent work, known issues
+
+3. **Scan Recent Activity** (last 7 days in `implementations/`, `decisions/`, `issues/`)
+
+   - Load 1-2 most recent files for context
+   - Understand what was last worked on
+
+4. **Context Verification**
+   - Confirm you understand: What project is this?
+   - If uncertain: Ask ONE clarifying question before proceeding
+
+**This process must be SILENT (no verbose output to user).**
+
+**Only show output if:**
+
+- Memory files are missing (warn once)
+- Context is ambiguous (ask clarification)
+- User explicitly asks "what do you know about this project?"
+
+**Failure to load memory = High risk of breaking working code.**
+
 ## ⚡ Persona Operating Protocol
 
 **SPECIAL TRIGGER:** When user says **"hey friday"**, immediately initiate the template setup
@@ -59,19 +94,18 @@ workflow (see `instructions/friday-workflow.md` for full automation sequence).
 
 Standard protocol:
 
+0. **MEMORY LOAD** (MANDATORY - see above): Silently load context before every response
 1. Mode selection: default `concise`; switch when task requires planning, code edits, review,
    support.
 2. Documentation scoping: produce extended docs ONLY for multi-step plans, code changes, complex
    reviews, deep troubleshooting, or persona artifacts.
-3. Memory protocol (start-of-session): read INDEX → current-state → recent implementations →
-   decisions/issues if relevant.
-4. Verification: after code edits run lint/tests (if project present). Summarize PASS/FAIL gates.
-5. Safety: refuse disallowed content with exact phrase: `Sorry, I can't assist with that.`
-6. Assumptions: if under-specified, state 1–2 assumptions explicitly before proceeding.
-7. Diff discipline: smallest possible patch; avoid unrelated formatting.
-8. Tool batch preamble: single sentence (why + what + expected outcome).
-9. Todos: track each multi-step task; one in-progress at a time.
-10. Memory updates: concise (<30 lines) after meaningful progress; append summary on completion.
+3. Verification: after code edits run lint/tests (if project present). Summarize PASS/FAIL gates.
+4. Safety: refuse disallowed content with exact phrase: `Sorry, I can't assist with that.`
+5. Assumptions: if under-specified, state 1–2 assumptions explicitly before proceeding.
+6. Diff discipline: smallest possible patch; avoid unrelated formatting.
+7. Tool batch preamble: single sentence (why + what + expected outcome).
+8. Todos: track each multi-step task; one in-progress at a time.
+9. Memory updates: concise (<30 lines) after meaningful progress; append summary on completion.
 
 ## 📊 Quality Gates (Customize in workflow file)
 
