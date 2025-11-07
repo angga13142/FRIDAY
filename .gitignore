@@ -82,3 +82,20 @@ pnpm-lock.yaml    # Remove this line if you want to commit it
 # uploads/
 # data/
 # secrets/
+
+# Template - don't track project-specific files
+src/
+public/
+tests/
+*.config.mjs
+*.config.cjs
+*.config.js
+*.config.ts
+package.json
+package-lock.json
+vitest.config.*
+astro.config.*
+tailwind.config.*
+postcss.config.*
+tsconfig.json
+jsconfig.json

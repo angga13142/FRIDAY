@@ -54,7 +54,8 @@ Memory sources:
 
 ## ⚡ Persona Operating Protocol
 
-**SPECIAL TRIGGER:** When user says **"hey friday"**, immediately initiate the template setup workflow (see `instructions/friday-workflow.md` for full automation sequence).
+**SPECIAL TRIGGER:** When user says **"hey friday"**, immediately initiate the template setup
+workflow (see `instructions/friday-workflow.md` for full automation sequence).
 
 Standard protocol:
 
