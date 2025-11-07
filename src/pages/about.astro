@@ -19,33 +19,129 @@ import Header from '../components/Header.astro';
           />
         </div>
       </div>
-      <div class="md:col-span-2 space-y-4 text-sm leading-relaxed text-black/70 dark:text-white/70">
-        <p>Saya Muhammad Nurhidayat Gani, sebelumnya seorang operator excavator profesional yang terbiasa dengan presisi struktural dan tanggung jawab tinggi di lapangan. Kini saya mentransfer prinsip ketelitian dan ketahanan sistem ke dunia pengembangan perangkat lunak.</p>
-        <p>Fokus saya: membangun antarmuka yang cepat, arsitektur modular, dan pengalaman pengguna yang jelas serta bermakna. Saya percaya solusi terbaik lahir dari kombinasi disiplin kerja dan desain yang berfokus pada kebutuhan nyata.</p>
+      <div class="md:col-span-2 space-y-6 text-black/80 dark:text-white/80">
+        <div class="space-y-4 leading-relaxed">
+          <p class="text-lg font-medium text-black dark:text-white">
+            From heavy machinery to clean code — I build systems that work.
+          </p>
+          
+          <p>
+            Saya Muhammad Nurhidayat Gani, seorang software developer yang memulai karier dari dunia yang sangat berbeda: sebagai operator excavator profesional. Selama bertahun-tahun bekerja di lapangan, saya belajar pentingnya presisi, sistem yang handal, dan tanggung jawab terhadap hasil kerja. Prinsip-prinsip itu kini saya terapkan dalam pengembangan perangkat lunak.
+          </p>
+
+          <p>
+            Transisi ke tech bukan kebetulan — ini adalah pilihan strategis. Saya melihat paralelisme antara membangun infrastruktur fisik dan digital: keduanya membutuhkan perencanaan matang, eksekusi presisi, dan pemeliharaan jangka panjang. Bedanya, di software, saya bisa membangun sistem yang melayani ribuan pengguna secara simultan dengan biaya operasional minimal.
+          </p>
+
+          <p>
+            Fokus saya ada pada <strong>full-stack development</strong> dengan spesialisasi di backend automation dan system architecture. Saya sangat tertarik dengan proyek yang menggabungkan AI, real-time systems, dan scalable infrastructure. Setiap line code yang saya tulis mengikuti prinsip: <em>modular, testable, maintainable</em>.
+          </p>
+
+          <p>
+            Saat ini saya fokus membangun aplikasi production-ready dengan tech stack modern: <strong>Node.js</strong> untuk backend, <strong>React/Next.js</strong> untuk frontend, dan <strong>Redis</strong> untuk state management. Saya juga aktif mengintegrasikan <strong>AI (Google Gemini)</strong> untuk automation dan natural language processing.
+          </p>
+        </div>
+
+        <div class="pt-6 border-t border-black/10 dark:border-white/10">
+          <h3 class="font-semibold mb-3 text-black dark:text-white">Highlight Achievements</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-accent mt-0.5">▸</span>
+              <span>Built WhatsApp e-commerce bot handling 100+ daily customers with 99% uptime</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-accent mt-0.5">▸</span>
+              <span>Achieved 99.7% test coverage (1121 tests) with comprehensive CI/CD pipeline</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-accent mt-0.5">▸</span>
+              <span>Reduced AI costs by 97% through strategic model selection (Gemini vs GPT-4)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-accent mt-0.5">▸</span>
+              <span>Optimized VPS deployment for 2GB RAM constraint (300-500MB usage)</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <section class="mb-16">
-      <h2 class="text-2xl font-semibold mb-4">Keahlian</h2>
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 text-xs">
-        <div>
-          <h3 class="font-semibold mb-2">Frontend</h3>
-          <div class="flex flex-wrap gap-2">{['Astro','React','Tailwind','Framer Motion','Next.js'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+      <h2 class="text-2xl font-semibold mb-6">Tech Stack & Skills</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h3 class="font-semibold mb-3 text-black dark:text-white">Frontend Development</h3>
+          <div class="flex flex-wrap gap-2 text-xs">
+            {['React 18','Next.js 14','Astro','TypeScript','Tailwind CSS','Framer Motion'].map(t => 
+              <span class="px-2 py-1 rounded bg-white dark:bg-gray-700 border border-black/10 dark:border-white/10">{t}</span>
+            )}
+          </div>
         </div>
-        <div>
-          <h3 class="font-semibold mb-2">Backend</h3>
-          <div class="flex flex-wrap gap-2">{['Node.js','Express','REST API'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+        
+        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h3 class="font-semibold mb-3 text-black dark:text-white">Backend & APIs</h3>
+          <div class="flex flex-wrap gap-2 text-xs">
+            {['Node.js 20','Express','REST API','WhatsApp API','Webhook Systems','Cron Jobs'].map(t => 
+              <span class="px-2 py-1 rounded bg-white dark:bg-gray-700 border border-black/10 dark:border-white/10">{t}</span>
+            )}
+          </div>
         </div>
-        <div>
-          <h3 class="font-semibold mb-2">Database</h3>
-          <div class="flex flex-wrap gap-2">{['PostgreSQL','Redis','MongoDB'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+        
+        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h3 class="font-semibold mb-3 text-black dark:text-white">AI & Automation</h3>
+          <div class="flex flex-wrap gap-2 text-xs">
+            {['Google Gemini','Vercel AI SDK','NLP','Intent Classification','Prompt Engineering'].map(t => 
+              <span class="px-2 py-1 rounded bg-white dark:bg-gray-700 border border-black/10 dark:border-white/10">{t}</span>
+            )}
+          </div>
         </div>
-        <div>
-          <h3 class="font-semibold mb-2">Tools</h3>
-          <div class="flex flex-wrap gap-2">{['Git','Docker','CI/CD','Jest'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+        
+        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h3 class="font-semibold mb-3 text-black dark:text-white">Database & Storage</h3>
+          <div class="flex flex-wrap gap-2 text-xs">
+            {['Redis','PostgreSQL','File-based Systems','Session Management'].map(t => 
+              <span class="px-2 py-1 rounded bg-white dark:bg-gray-700 border border-black/10 dark:border-white/10">{t}</span>
+            )}
+          </div>
         </div>
-        <div>
-          <h3 class="font-semibold mb-2">Prinsip</h3>
-          <div class="flex flex-wrap gap-2">{['Modularitas','Kinerja','Aksesibilitas','Keamanan'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+        
+        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h3 class="font-semibold mb-3 text-black dark:text-white">Testing & Quality</h3>
+          <div class="flex flex-wrap gap-2 text-xs">
+            {['Jest','Supertest','Unit Testing','Integration Tests','CI/CD','ESLint'].map(t => 
+              <span class="px-2 py-1 rounded bg-white dark:bg-gray-700 border border-black/10 dark:border-white/10">{t}</span>
+            )}
+          </div>
+        </div>
+        
+        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h3 class="font-semibold mb-3 text-black dark:text-white">DevOps & Deployment</h3>
+          <div class="flex flex-wrap gap-2 text-xs">
+            {['Git','GitHub Actions','PM2','VPS Management','Vercel','CDN'].map(t => 
+              <span class="px-2 py-1 rounded bg-white dark:bg-gray-700 border border-black/10 dark:border-white/10">{t}</span>
+            )}
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-8 grid sm:grid-cols-2 gap-6">
+        <div class="border border-black/10 dark:border-white/10 rounded-lg p-6">
+          <h3 class="font-semibold mb-3 text-black dark:text-white">Core Principles</h3>
+          <ul class="space-y-2 text-sm text-black/70 dark:text-white/70">
+            <li>• Modular architecture dengan single responsibility</li>
+            <li>• Test-driven development (80%+ coverage)</li>
+            <li>• Performance optimization untuk low-resource environments</li>
+            <li>• Security-first approach (input validation, XSS prevention)</li>
+          </ul>
+        </div>
+        
+        <div class="border border-black/10 dark:border-white/10 rounded-lg p-6">
+          <h3 class="font-semibold mb-3 text-black dark:text-white">Currently Learning</h3>
+          <ul class="space-y-2 text-sm text-black/70 dark:text-white/70">
+            <li>• Advanced AI prompt engineering techniques</li>
+            <li>• Microservices architecture patterns</li>
+            <li>• Real-time data streaming (WebSockets)</li>
+            <li>• Cloud-native development (AWS/GCP)</li>
+          </ul>
         </div>
       </div>
     </section>
