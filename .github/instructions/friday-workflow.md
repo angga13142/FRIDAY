@@ -71,30 +71,66 @@ I'll provide:
 **Me:**
 
 ```
-🤖 FRIDAY: Initializing template setup workflow...
+**Anda (di Copilot Chat):** hey friday
 
-Let's get your project configured! I need a few details:
+---
 
-1. **Project Name**: (e.g., "E-Commerce API")
-2. **Project Type**: Choose one:
-   - web (frontend/fullstack web app)
-   - api (backend REST/GraphQL API)
-   - mobile (React Native/Flutter)
-   - cli (command-line tool)
-   - data-science (Jupyter/ML pipeline)
-   - chatbot (messaging bot)
-   - other (describe briefly)
+**FRIDAY:**
 
-Please provide these details and I'll configure everything automatically.
+🤖 **FRIDAY: Initializing template setup workflow...**
+
+Selamat datang! Saya akan membantu setup proyek Anda. Butuh beberapa detail:
+
+**📝 Informasi Proyek:**
+
+1. **Project Name**: Nama proyek (e.g., "My Awesome App")
+2. **Project Type**: Pilih salah satu:
+   - `web` (frontend/fullstack web app)
+   - `api` (backend REST/GraphQL)
+   - `mobile` (React Native/Flutter)
+   - `cli` (command-line tool)
+   - `data-science` (ML/analytics)
+   - `chatbot` (messaging bot)
+   - `other` (jelaskan singkat)
+
+3. **Tech Stack**: Teknologi utama (e.g., "Next.js + TypeScript + Tailwind")
+4. **Primary Language**: JavaScript/TypeScript/Python/Go/etc.
+5. **Framework**: Next.js/React/Express/FastAPI/etc.
+
+**Silakan berikan detail, atau gunakan format cepat:**
+> Format: `ProjectName | Type | Stack | Language | Framework`
+>
+> Contoh: `TaskManager | web | Next.js + TypeScript + Tailwind | TypeScript | Next.js`
+
+---
+
+### ✍️ Anda Memberikan Info:
+
+**Anda:** TaskManager | web | Next.js + TypeScript + Tailwind | TypeScript | Next.js
+
+---
+
+**FRIDAY:**
+
+✅ **Got it! Setting up TaskManager...**
+
 ```
 
-**You:** Project Name: CRM Dashboard, Type: web, Stack: React + TypeScript + Tailwind, Language:
+📊 Configuration Summary: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Project Name: TaskManager Project
+Type: web Tech Stack: Next.js + TypeScript + Tailwind Language: TypeScript Framework: Next.js
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+```
+
+```
+
+**You:** Project Name: TaskManager, Type: web, Stack: React + TypeScript + Tailwind, Language:
 TypeScript, Framework: Next.js
 
 **Me:**
 
 ```
-✅ Got it! Setting up CRM Dashboard...
+✅ Got it! Setting up TaskManager...
 
 [Automatic execution of Phases 2-6]
 
