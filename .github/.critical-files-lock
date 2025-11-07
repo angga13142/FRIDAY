@@ -1,30 +1,21 @@
 # Critical Files Lock
 
-# Files listed here are PROTECTED from modifications
+# Files listed here should be modified WITH CAUTION
 
-# Any changes to these files will trigger a warning
+# Changes will trigger a warning (not block)
 
-# AI Agent: You MUST get explicit approval before modifying these files
+# AI Agent: Explain your reasoning when modifying these files
 
-# Core Configuration (DO NOT MODIFY without approval)
+# Template Core (rarely needs changes)
 
-.github/copilot-instructions.md
-.github/instructions/memory.instructions.md
-.github/instructions/persona-guardrails.md
-
-# Critical Scripts (DO NOT MODIFY without approval)
-
-.github/scripts/template-sterilization-check.sh
 customize.sh
 
-# Memory Index (PROTECT structure)
-
-.github/memory/INDEX.md
-
-# Add your critical files below (one per line)
+# Add your truly critical files below (files that break the system if wrong)
 
 # Example:
 
-# src/core/AppRuntime.js
+# src/core/DatabaseConnection.js
 
 # src/config/production.config.js
+
+src/core/critical-module.js
