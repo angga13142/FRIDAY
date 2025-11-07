@@ -194,10 +194,10 @@ echo "Test 7: Enforcement Mechanism Validation"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 # Check enforcement is built-in (not external script)
-if ! grep -q "bash.*memory.*sh" "$COPILOT_FILE"; then
-    pass_test "No external script dependency (built-in enforcement)"
+if ! grep -q "bash.*memory-checkpoint\|bash.*protect-critical" "$COPILOT_FILE"; then
+    pass_test "No external enforcement script dependency (built-in)"
 else
-    fail_test "Still depends on external scripts"
+    fail_test "Still depends on external enforcement scripts"
 fi
 
 # Check for failure consequence
@@ -205,6 +205,47 @@ if grep -q "Failure to load memory" "$COPILOT_FILE"; then
     pass_test "Documents consequences of memory failure"
 else
     fail_test "Does not document failure consequences"
+fi
+echo ""
+
+# Test 8: Memory lifecycle management
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "Test 8: Memory Lifecycle Management"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+LIFECYCLE_SCRIPT="$REPO_ROOT/.github/scripts/memory-lifecycle.sh"
+
+if [ -f "$LIFECYCLE_SCRIPT" ]; then
+    pass_test "memory-lifecycle.sh exists"
+    
+    if [ -x "$LIFECYCLE_SCRIPT" ]; then
+        pass_test "memory-lifecycle.sh is executable"
+    else
+        fail_test "memory-lifecycle.sh is not executable"
+    fi
+    
+    # Test script runs without error
+    if bash "$LIFECYCLE_SCRIPT" check > /dev/null 2>&1; then
+        pass_test "memory-lifecycle.sh check command works"
+    else
+        fail_test "memory-lifecycle.sh check command failed"
+    fi
+    
+    # Check for memory update protocol in copilot-instructions
+    if grep -q "Memory Update Protocol" "$COPILOT_FILE"; then
+        pass_test "Memory Update Protocol documented"
+    else
+        fail_test "Memory Update Protocol not documented"
+    fi
+    
+    # Check for memory lifecycle documentation
+    if grep -q "Memory Lifecycle" "$COPILOT_FILE"; then
+        pass_test "Memory Lifecycle rules documented"
+    else
+        fail_test "Memory Lifecycle rules not documented"
+    fi
+else
+    fail_test "memory-lifecycle.sh not found"
 fi
 echo ""
 

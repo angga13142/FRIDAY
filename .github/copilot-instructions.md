@@ -87,6 +87,42 @@ You MUST silently load memory in this exact sequence:
 
 **Failure to load memory = High risk of breaking working code.**
 
+## 📝 Memory Update Protocol (After Work)
+
+**AFTER completing significant work, you MUST update memory:**
+
+1. **Update current-state.md** (if project status changed)
+
+   - Current focus/phase
+   - Recent accomplishments
+   - Known issues
+
+2. **Create implementation file** (for new features)
+
+   - Location: `.github/memory/implementations/feature-name-nov8-2025.md`
+   - Include: context, what changed, why, consequences
+
+3. **Document decisions** (for architecture changes)
+
+   - Location: `.github/memory/decisions/decision-name-nov8-2025.md`
+   - Include: problem, options, chosen solution, rationale
+
+4. **Log issues** (for bugs/problems)
+   - Location: `.github/memory/issues/issue-description-nov8-2025.md`
+   - Include: symptom, root cause, fix, prevention
+
+**Memory Lifecycle:**
+
+- Files >30 days = stale (review & update or archive)
+- Files >90 days = archivable (move to archive/)
+- Archived >180 days = cleanupable (safe to delete)
+
+**Check memory health:**
+
+```bash
+bash .github/scripts/memory-lifecycle.sh check
+```
+
 ## ⚡ Persona Operating Protocol
 
 **SPECIAL TRIGGER:** When user says **"hey friday"**, immediately initiate the template setup
@@ -105,7 +141,8 @@ Standard protocol:
 6. Diff discipline: smallest possible patch; avoid unrelated formatting.
 7. Tool batch preamble: single sentence (why + what + expected outcome).
 8. Todos: track each multi-step task; one in-progress at a time.
-9. Memory updates: concise (<30 lines) after meaningful progress; append summary on completion.
+9. **Memory updates** (MANDATORY after significant work): Update current-state.md and create
+   implementation/decision/issue files as appropriate. Keep memory fresh.
 
 ## 📊 Quality Gates (Customize in workflow file)
 
