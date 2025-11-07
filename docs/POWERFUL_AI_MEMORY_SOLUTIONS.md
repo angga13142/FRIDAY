@@ -13,22 +13,23 @@ Dua solusi memory AI agent paling powerful saat ini:
 1. **Redis Agent Memory Server** - Production-ready, self-hosted, Redis-based
 2. **Letta (MemGPT)** - Managed platform, context-window optimization focus
 
-**Recommendation for FRIDAY:** Hybrid approach - Git memory (current) + Redis Agent Memory Server (semantic layer)
+**Recommendation for FRIDAY:** Hybrid approach - Git memory (current) + Redis Agent Memory Server
+(semantic layer)
 
 ---
 
 ## 📊 Quick Comparison
 
-| Aspect | Redis Agent Memory | Letta (MemGPT) | Git Memory (FRIDAY Current) |
-|--------|-------------------|----------------|----------------------------|
-| **Trust Score** | 9.0/10 | 8.0/10 | N/A (Manual) |
-| **Deployment** | Self-hosted (Docker) | Cloud/Self-hosted | Local filesystem |
-| **Search** | Semantic + Filters | Context-aware | Manual grep/find |
-| **Cost** | Free (self-host) | Freemium | Free |
-| **Complexity** | Medium | High | Low |
-| **Integration** | REST API + MCP | Python SDK + API | Direct file access |
-| **Persistence** | Redis | Database | Git version control |
-| **Team Sharing** | API-based | Cloud sync | Git commits |
+| Aspect           | Redis Agent Memory   | Letta (MemGPT)    | Git Memory (FRIDAY Current) |
+| ---------------- | -------------------- | ----------------- | --------------------------- |
+| **Trust Score**  | 9.0/10               | 8.0/10            | N/A (Manual)                |
+| **Deployment**   | Self-hosted (Docker) | Cloud/Self-hosted | Local filesystem            |
+| **Search**       | Semantic + Filters   | Context-aware     | Manual grep/find            |
+| **Cost**         | Free (self-host)     | Freemium          | Free                        |
+| **Complexity**   | Medium               | High              | Low                         |
+| **Integration**  | REST API + MCP       | Python SDK + API  | Direct file access          |
+| **Persistence**  | Redis                | Database          | Git version control         |
+| **Team Sharing** | API-based            | Cloud sync        | Git commits                 |
 
 ---
 
@@ -76,10 +77,12 @@ Dua solusi memory AI agent paling powerful saat ini:
 ### Core Features
 
 **1. Dual Memory System**
+
 - **Working Memory:** Session-scoped, ephemeral, conversation context
 - **Long-Term Memory:** Persistent, semantic searchable, cross-session
 
 **2. Memory Types**
+
 ```python
 # Semantic Memory (facts, preferences, knowledge)
 {
@@ -192,6 +195,7 @@ POST /v1/memory-prompt
 ### MCP (Model Context Protocol) Interface
 
 Tools exposed untuk LLM agents:
+
 - `set_working_memory` - Store session context
 - `create_long_term_memories` - Persist knowledge
 - `search_long_term_memory` - Semantic retrieval
@@ -200,18 +204,19 @@ Tools exposed untuk LLM agents:
 ### Deployment
 
 **Docker Compose:**
+
 ```yaml
 version: '3.8'
 services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
-  
+      - '6379:6379'
+
   agent-memory:
     image: redis/agent-memory-server:latest
     ports:
-      - "8000:8000"
+      - '8000:8000'
     environment:
       - REDIS_URL=redis://redis:6379
       - OPENAI_API_KEY=${OPENAI_API_KEY}
@@ -220,6 +225,7 @@ services:
 ```
 
 **Start:**
+
 ```bash
 docker-compose up -d
 ```
@@ -279,12 +285,14 @@ docker-compose up -d
 ### Core Concepts
 
 **1. Core Memory (In-Context)**
+
 - Always visible in context window
 - Agent can edit via memory tools
 - Limited by context window size
 - Organized in blocks (e.g., "About User", "About Task")
 
 **2. Memory Blocks**
+
 - Templatable (initial state for new agents)
 - Simulated (sandbox for testing)
 - Agent-specific (deployed instances)
@@ -304,11 +312,13 @@ core_memory_append()
 ```
 
 **4. Unified Recall**
+
 - External storage beyond context window
 - Semantic search for retrieval
 - Auto-summarization for long contexts
 
 **5. Sleep-time Agent**
+
 - Background process for memory consolidation
 - Merges similar memories
 - Optimizes memory structure
@@ -356,11 +366,13 @@ POST /api/v1/agents/{id}/memory-blocks
 ### Deployment
 
 **Cloud (Managed):**
+
 - Sign up at https://app.letta.com
 - API key based access
 - No infrastructure management
 
 **Self-Hosted:**
+
 ```bash
 pip install letta
 letta server start --port 8080
@@ -406,16 +418,16 @@ Audit Trail          Cross-Session Context
 
 ### Responsibility Split
 
-| Memory Type | Storage | Use Case |
-|-------------|---------|----------|
-| **Architecture Decisions** | Git (`decisions/`) | Team-visible, permanent, version-controlled |
-| **Implementation Summaries** | Git (`implementations/`) | Documentation, lessons learned, references |
-| **Known Issues** | Git (`issues/`) | Bug tracking, troubleshooting guides |
-| **Project Status** | Git (`current-state.md`) | Current features, focus, statistics |
-| **User Preferences** | Redis (semantic) | "User prefers concise responses" |
-| **Session Context** | Redis (working memory) | Current conversation state |
-| **Quick Notes** | Redis (episodic) | Temporary observations, progress tracking |
-| **Cross-Session Patterns** | Redis (long-term) | Recurring issues, common workflows |
+| Memory Type                  | Storage                  | Use Case                                    |
+| ---------------------------- | ------------------------ | ------------------------------------------- |
+| **Architecture Decisions**   | Git (`decisions/`)       | Team-visible, permanent, version-controlled |
+| **Implementation Summaries** | Git (`implementations/`) | Documentation, lessons learned, references  |
+| **Known Issues**             | Git (`issues/`)          | Bug tracking, troubleshooting guides        |
+| **Project Status**           | Git (`current-state.md`) | Current features, focus, statistics         |
+| **User Preferences**         | Redis (semantic)         | "User prefers concise responses"            |
+| **Session Context**          | Redis (working memory)   | Current conversation state                  |
+| **Quick Notes**              | Redis (episodic)         | Temporary observations, progress tracking   |
+| **Cross-Session Patterns**   | Redis (long-term)        | Recurring issues, common workflows          |
 
 ### Implementation Steps
 
@@ -451,19 +463,19 @@ class FridayMemoryAdapter:
         self.git_path = Path(git_memory_path)
         self.redis_client = None
         self.redis_url = redis_url
-    
+
     async def init(self):
         """Initialize Redis client"""
         self.redis_client = await create_memory_client(
             base_url=self.redis_url,
             default_namespace="friday"
         )
-    
+
     async def close(self):
         """Cleanup"""
         if self.redis_client:
             await self.redis_client.close()
-    
+
     # Git Memory (Structured, Permanent)
     def read_git_memory(self, category="INDEX"):
         """Read from Git memory files"""
@@ -471,12 +483,12 @@ class FridayMemoryAdapter:
         if file_path.exists():
             return file_path.read_text()
         return None
-    
+
     def write_git_memory(self, category, content):
         """Write to Git memory files"""
         file_path = self.git_path / f"{category}.md"
         file_path.write_text(content)
-    
+
     # Redis Memory (Semantic, Fast Retrieval)
     async def store_preference(self, user_id, preference_text, topics=None):
         """Store user preference in Redis"""
@@ -487,7 +499,7 @@ class FridayMemoryAdapter:
             user_id=user_id
         )
         await self.redis_client.create_long_term_memory([memory])
-    
+
     async def search_context(self, query, user_id=None, limit=10):
         """Search relevant context from Redis"""
         results = await self.redis_client.search_long_term_memory(
@@ -496,7 +508,7 @@ class FridayMemoryAdapter:
             limit=limit
         )
         return results.memories
-    
+
     # Hybrid: Combine Both
     async def get_full_context(self, user_id, query):
         """Retrieve complete context (Git + Redis)"""
@@ -505,15 +517,15 @@ class FridayMemoryAdapter:
             "index": self.read_git_memory("INDEX"),
             "current_state": self.read_git_memory("current-state"),
         }
-        
+
         # 2. Redis memory (semantic search)
         redis_memories = await self.search_context(query, user_id, limit=5)
-        
+
         return {
             "structured": git_context,
             "semantic": [{"text": m.text, "distance": m.dist} for m in redis_memories]
         }
-    
+
     async def log_session_progress(self, session_id, summary, user_id=None):
         """Log progress to both systems"""
         # Redis: quick episodic note
@@ -524,7 +536,7 @@ class FridayMemoryAdapter:
             user_id=user_id
         )
         await self.redis_client.create_long_term_memory([episodic])
-        
+
         # Git: structured implementation summary (if significant)
         # ... (delegate to manual process or template)
 
@@ -532,7 +544,7 @@ class FridayMemoryAdapter:
 async def main():
     adapter = FridayMemoryAdapter()
     await adapter.init()
-    
+
     try:
         # Store user preference
         await adapter.store_preference(
@@ -540,16 +552,16 @@ async def main():
             preference_text="User prefers concise bullet-point responses",
             topics=["communication", "style"]
         )
-        
+
         # Search context for question
         context = await adapter.get_full_context(
             user_id="dev_123",
             query="How should I respond to user questions?"
         )
-        
+
         print("Git Context:", context["structured"]["index"][:100])
         print("Redis Memories:", context["semantic"])
-        
+
     finally:
         await adapter.close()
 
@@ -571,15 +583,18 @@ REDIS_MEMORY_ENABLE=false  # Set true to use hybrid mode
 ## Memory Protocol (Enhanced - Hybrid Mode)
 
 **At session start:**
+
 1. Load semantic context from Redis (if enabled)
 2. Read `.github/memory/INDEX.md` (structured)
 3. Combine both for comprehensive context
 
 **During work:**
+
 - Update Redis with preferences, quick notes, session context
 - Update Git memory with structured docs (implementations, decisions)
 
 **After completion:**
+
 - Redis: Session summary (episodic memory)
 - Git: Implementation doc (if significant)
 ```
@@ -591,11 +606,13 @@ REDIS_MEMORY_ENABLE=false  # Set true to use hybrid mode
 ### Redis Agent Memory Server
 
 **Infrastructure:**
+
 - Docker container: Free (self-host)
 - Redis instance: Free (docker) or $0.003/hr (Redis Cloud)
 - Server: $5-20/month (DigitalOcean/Hetzner VPS)
 
 **API Costs:**
+
 - OpenAI embeddings: ~$0.0001 per 1K tokens
 - Vector search: Free (Redis native)
 
@@ -604,11 +621,13 @@ REDIS_MEMORY_ENABLE=false  # Set true to use hybrid mode
 ### Letta
 
 **Cloud:**
+
 - Free tier: Limited agents & memory
 - Pro: $20-50/month (estimated)
 - Enterprise: Custom pricing
 
 **Self-Hosted:**
+
 - Server: $10-30/month
 - Database: $5-20/month
 - LLM API: Variable (OpenAI/Anthropic)
@@ -620,6 +639,7 @@ REDIS_MEMORY_ENABLE=false  # Set true to use hybrid mode
 **Cost:** $0 (completely free)
 
 **Limitations:**
+
 - No semantic search
 - Manual organization required
 - Slower retrieval for large repos
@@ -629,11 +649,13 @@ REDIS_MEMORY_ENABLE=false  # Set true to use hybrid mode
 ## 🎯 Recommendation for FRIDAY
 
 ### Phase 1: Keep Git Memory (Now)
+
 - ✅ Free, version controlled, team visible
 - ✅ Works great for structured docs
 - ✅ No external dependencies
 
 ### Phase 2: Add Redis Memory (Optional Enhancement)
+
 - Add when project needs:
   - Multi-user preference tracking
   - Fast semantic search across sessions
@@ -641,6 +663,7 @@ REDIS_MEMORY_ENABLE=false  # Set true to use hybrid mode
   - Recency-aware memory ranking
 
 ### Phase 3: Letta (Future Consideration)
+
 - Consider if:
   - Need managed solution
   - Want advanced context optimization
@@ -651,16 +674,19 @@ REDIS_MEMORY_ENABLE=false  # Set true to use hybrid mode
 ## 📚 Resources
 
 **Redis Agent Memory Server:**
+
 - GitHub: https://github.com/redis/agent-memory-server
 - Docs: https://github.com/redis/agent-memory-server/tree/main/docs
 - Examples: https://github.com/redis/agent-memory-server/tree/main/examples
 
 **Letta (MemGPT):**
+
 - Website: https://www.letta.com
 - Docs: https://docs.letta.com
 - GitHub: https://github.com/letta-ai/letta
 
 **FRIDAY Current Memory:**
+
 - Protocol: `.github/instructions/memory.instructions.md`
 - Implementation: `docs/AI_AGENT_MEMORY_IMPLEMENTATION.md`
 
@@ -693,4 +719,5 @@ python .github/scripts/friday-memory-adapter.py
 
 ---
 
-**Conclusion:** Redis Agent Memory Server is the most practical upgrade for FRIDAY - self-hosted, free, powerful semantic search, and complements existing Git memory perfectly.
+**Conclusion:** Redis Agent Memory Server is the most practical upgrade for FRIDAY - self-hosted,
+free, powerful semantic search, and complements existing Git memory perfectly.
