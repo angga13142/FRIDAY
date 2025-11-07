@@ -1,145 +1,140 @@
-# Integration Points
+# Integration Guidelines (Template)
 
-## WhatsApp Web Protocol
+Use this file to define how your project integrates with external systems (APIs, data stores,
+messaging, auth). Replace placeholders with specifics for your implementation.
 
-- Uses `whatsapp-web.js` with `LocalAuth` strategy (stores session in `.wwebjs_auth/`)
-- Two authentication methods:
-  - **QR Code** (default): Scan QR code with WhatsApp phone app
-  - **Pairing Code**: Enter 8-digit code in WhatsApp Linked Devices (set `USE_PAIRING_CODE=true` and `PAIRING_PHONE_NUMBER` in .env)
-- Pairing code format: phone number without + or spaces (e.g., `6281234567890` for Indonesia)
-- Code expires every 3 minutes and auto-refreshes
-- Group messages and status updates are ignored in message handler
+## 1. External Services Inventory
 
-## Payment Integration Patterns
+Document each external dependency: | Service | Purpose | Protocol | Auth Method | Retry Policy |
+Timeout | |---------|---------|----------|-------------|--------------|---------| | Example: Payment
+API | Payment capture | HTTPS REST | API Key (env) | Exponential (5 tries) | 8s | | Example: Search
+Engine | Full-text search | gRPC | OAuth2 | Immediate fail | 3s |
 
-Three payment tiers supported:
+## 2. Configuration & Secrets
 
-### 1. Automatic QRIS (Recommended for scale)
+Place environment variables in `.env.example` with comments:
 
-- Integrate QRIS payment gateway API (e.g., Midtrans, Xendit, Duitku)
-- In `handleCheckout()`: generate unique QRIS code per order, send image via `message.reply(MessageMedia.fromUrl(qrisUrl))`
-- Add new step `'awaiting_payment'` to session state
-- Poll payment status via webhook or polling interval
-- Auto-deliver product on payment confirmation
-- Store order ID in session: `session.orderId = response.order_id`
+```
+PAYMENT_API_KEY=your_key_here        # Secret key for payment provider
+SEARCH_ENDPOINT=https://...          # External search URL
+FEATURE_FLAG_RECOMMENDATIONS=false   # Toggle experimental feature
+```
 
-### 2. Semi-Automatic QRIS (Static QR per e-wallet)
+Never commit real secrets. Use secret managers in production.
 
-- Store static QRIS images in `/assets/qris/` (dana.jpg, ovo.jpg, gopay.jpg, shopeepay.jpg)
-- In `handleCheckout()`: ask customer to select e-wallet (add `'select_payment'` step)
-- Send corresponding static QR: `MessageMedia.fromFilePath('./assets/qris/dana.jpg')`
-- Customer sends payment proof screenshot
-- Add message handler for image messages: check `message.hasMedia` and `message.type === 'image'`
-- Forward to admin or store in `/payment_proofs/` for manual verification
-- Admin sends confirmation command to trigger delivery
+## 3. Common Patterns
 
-### 3. Manual (Current implementation)
+### HTTP API Wrapper
 
-- Text-based payment instructions in `handleCheckout()`
-- Customer contacts admin with proof
-- No automation
+Wrap external APIs in a service class with:
 
-## Payment Integration Example (Semi-Auto)
+- Input validation
+- Error normalization
+- Retries & circuit breaker (optional)
 
-```javascript
-// In chatbotLogic.js, add to handleCheckout()
-if (message === "qris") {
-  this.sessionManager.setStep(customerId, "upload_proof");
-  return "Please send your payment proof screenshot.";
-}
+### Messaging / Events
 
-// In index.js message handler, check for images
-if (message.hasMedia && message.type === "image") {
-  const step = sessionManager.getStep(message.from);
-  if (step === "upload_proof") {
-    const media = await message.downloadMedia();
-    // Save: fs.writeFileSync(`./proofs/${Date.now()}.jpg`, media.data, 'base64');
-    await message.reply(
-      "✅ Payment proof received! Admin will verify within 5-15 minutes."
-    );
-    // Notify admin via another WhatsApp number or webhook
-  }
+If using queues or pub/sub:
+
+- Define event contracts (`events/<domain>-events.md`)
+- Include idempotency keys and version field
+- Consumer ACK strategy documented
+
+### Persistence
+
+Abstract data access via repository interfaces:
+
+```
+interface UserRepository {
+  findById(id: string): Promise<User|null>
+  save(user: User): Promise<void>
 }
 ```
 
-## Xendit Integration
+Allows swapping DB implementations without business logic changes.
 
-Current implementation uses Xendit for QRIS:
+## 4. Integration Checklist
 
-- `services/xenditService.js` - Xendit API wrapper
-- `services/qrisService.js` - QRIS generation and management
-- Webhook endpoint: `/webhook/xendit` in `services/webhookServer.js`
-- Auto-delivery on payment confirmation
-- Payment reminders via cron job
+Before adding a new integration:
 
-## Redis Integration
+- [ ] Clarify SLA & latency expectations
+- [ ] Decide error handling & fallback behavior
+- [ ] Define request/response schema
+- [ ] Add env vars & update `.env.example`
+- [ ] Create service wrapper + interface
+- [ ] Add unit tests with mocks
+- [ ] Document in this file (inventory table)
+- [ ] Update monitoring/logging if needed
 
-For session persistence and rate limiting:
+## 5. Error Handling & Retries
 
-```javascript
-// Install: npm install redis
-const redis = require('redis');
-const client = redis.createClient();
+Use exponential backoff for transient network errors: `delay = base * 2^attempt` (cap max). Abort
+after N attempts and surface normalized error.
 
-// In sessionManager.js, replace Map with Redis:
-async getSession(customerId) {
-  const data = await client.get(`session:${customerId}`);
-  return data ? JSON.parse(data) : this.createSession(customerId);
-}
+Provide categorized errors (e.g., `ExternalTimeoutError`, `ValidationError`, `AuthError`).
 
-async setSession(customerId, session) {
-  await client.set(`session:${customerId}`, JSON.stringify(session), {
-    EX: 1800 // 30 min TTL
-  });
-}
+## 6. Observability
+
+Log external calls at debug level with:
+
+- service name
+- endpoint/path
+- duration
+- success/failure flag
+
+Add metrics (counter: calls, histogram: latency, gauge: open circuits) if using monitoring stack.
+
+## 7. Fallback Strategies
+
+For non-critical services:
+
+- Serve cached/stale data
+- Return partial response with `warnings` array For critical failures:
+- Return standardized maintenance message
+
+## 8. Internationalization (Optional)
+
+To support multiple languages:
+
+- Store text resources in `i18n/<lang>.json`
+- Provide helper: `t(key, lang)`
+- Avoid hardcoding copy in business logic
+
+## 9. Security Considerations
+
+- Validate all external input
+- Enforce timeouts (no hanging requests)
+- Escape/encode data before persisting or rendering
+- Rotate keys & audit usage
+
+## 10. Testing Strategy
+
+| Test Type   | What to Cover                                 |
+| ----------- | --------------------------------------------- |
+| Unit        | Service wrapper methods (mock transport)      |
+| Integration | Happy path + error path against sandbox/stub  |
+| Contract    | Schema validation (e.g., OpenAPI/JSON Schema) |
+| Resilience  | Retry/backoff logic, timeouts                 |
+
+## 11. Versioning & Change Management
+
+Track API version changes in `docs/integration-changelog.md`:
+
+```
+## 2025-11-07
+- Added v2 /payments endpoint (supports batch capture)
 ```
 
-Redis auto-expires sessions and survives bot restarts.
+## 12. Removal / Decommission
 
-## Media Messages
+When removing an integration:
 
-**Media messages require special handling:**
+- [ ] Identify dependent modules
+- [ ] Remove env vars & secrets
+- [ ] Archive service wrapper
+- [ ] Update inventory table
+- [ ] Clean tests & mocks
 
-- `message.hasMedia` must be checked separately
-- Download with `await message.downloadMedia()`
-- Send with `MessageMedia.fromFilePath(path)` or `MessageMedia.fromUrl(url)`
-- Supports images (QRIS), documents (invoices), audio (voice notes for support)
+---
 
-Example:
-
-```javascript
-if (message.hasMedia) {
-  const media = await message.downloadMedia();
-
-  if (message.type === "image") {
-    // Handle payment proof
-    fs.writeFileSync(`./proofs/${Date.now()}.jpg`, media.data, "base64");
-  }
-}
-```
-
-## Multi-Language Support
-
-Create `messages/` directory with language files:
-
-- `messages/id.js` - Bahasa Indonesia (default)
-- `messages/en.js` - English
-
-Structure:
-
-```javascript
-// messages/id.js
-module.exports = {
-  welcome: "👋 *Selamat datang di Premium Shop!*",
-  menu: "*Apa yang ingin Anda lakukan?*",
-  browse: "Jelajahi Produk",
-  cart: "Lihat Keranjang",
-  // ...
-};
-```
-
-Store language preference in session: `session.language = 'id'`
-
-Load messages: `const msg = require(`./messages/${session.language}.js`);`
-
-Detect language from first message or add `/language` command
+Template ready; customize sections for your project.

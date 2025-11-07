@@ -62,6 +62,17 @@ Payment methods from `payment_methods/` directory
 | [github-workflows-rules.md](github-workflows-rules.md) | CI/CD requirements               | 9.5KB |
 | [test-status.md](test-status.md)                       | Test coverage & status           | 5.4KB |
 
+### Persona Enhancements
+
+| File                                                  | Purpose                              |
+| ----------------------------------------------------- | ------------------------------------ |
+| ../../.github/instructions/persona-modes.md           | Response modes & documentation rules |
+| ../../.github/instructions/persona-guardrails.md      | Safety, tooling protocol, escalation |
+| ../../.github/instructions/persona-evals.md           | Evaluation rubric & scenarios        |
+| ../../.github/instructions/tooling-matrix.md          | Task→tool decision guide             |
+| ../../.github/instructions/persona-instrumentation.md | Feedback loop & logging template     |
+| ../../.github/instructions/persona-fewshots.md        | Canonical examples per mode          |
+
 ### Active Files (Root)
 
 - **README.md** - Memory system overview
@@ -106,28 +117,22 @@ Completed or outdated documentation:
 
 ### Need Information About...
 
-**Deployment?**
-→ Check: `/memories/one-click-deployment-system.md`  
+**Deployment?** → Check: `/memories/one-click-deployment-system.md`  
 → See also: `docs/FRESH_SERVER_DEPLOYMENT.md`
 
-**Payment Integration?**
-→ Check: `implementations/dynamic-payment-implementation.md`  
+**Payment Integration?** → Check: `implementations/dynamic-payment-implementation.md`  
 → See also: `docs/PAYMENT_SYSTEM.md`
 
-**Product Management?**
-→ Check: `implementations/dynamic-product-implementation.md`  
+**Product Management?** → Check: `implementations/dynamic-product-implementation.md`  
 → See also: `products_data/README.md`
 
-**Testing?**
-→ Check: `test-status.md`  
+**Testing?** → Check: `test-status.md`  
 → See also: `docs/TESTING_GUIDE.md`
 
-**CI/CD?**
-→ Check: `github-workflows-rules.md`  
+**CI/CD?** → Check: `github-workflows-rules.md`  
 → See also: `.github/workflows/`
 
-**Bugs/Gotchas?**
-→ Check: `issues/critical-bugs-pitfalls.md`  
+**Bugs/Gotchas?** → Check: `issues/critical-bugs-pitfalls.md`  
 → See also: `docs/TROUBLESHOOTING.md`
 
 ---

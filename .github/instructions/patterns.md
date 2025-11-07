@@ -1,197 +1,152 @@
-# Design Patterns & Best Practices
+# Design Patterns & Best Practices (Template)
 
-## Message Processing Flow
+Use these generalized patterns for any modular backend/service-oriented project. Replace
+placeholders with your domain specifics.
 
-Messages follow a modular pipeline using the new architecture:
+## Request Processing Flow
 
-**Pipeline:** `MessageDispatcher` → `MessageRouter` → `Handler` → Response
+Typical pipeline: `TransportAdapter` → `RequestRouter` → `Handler` → `ResponseFormatter`
 
-1. **Dispatcher** (`src/core/MessageDispatcher.js`) - Receives WhatsApp message, filters groups/status
-2. **Router** (`src/core/MessageRouter.js` or `lib/messageRouter.js`) - Analyzes command type and session step
-3. **Handler** (`src/handlers/*`) - Processes business logic (Customer/Admin/Product handler)
-4. **Response** - Handler returns formatted message string
+1. Adapter normalizes raw input (lowercase, trim, parse JSON) and filters unsupported sources.
+2. Router resolves route by method/path or command keyword.
+3. Middleware stack (auth, rate limiting, validation) executes.
+4. Handler performs business logic using injected services.
+5. Response formatter serializes output into transport-specific format (HTTP, event, CLI, etc.).
 
-### Flow Details
+### Advantages
 
-1. Normalize input (lowercase, trim) in Dispatcher
-2. Check for global commands (`menu`, `cart`) in Router - always accessible
-3. Check for admin commands (prefix `/`) in Router - delegate to AdminHandler
-4. Route to step-specific handler method based on current session step
-5. Handler updates session state via SessionService
-6. Handler returns response string to Dispatcher
-7. Dispatcher sends reply via WhatsApp client
+- Single responsibility per component
+- Easy middleware insertion
+- Test handlers in isolation with mocked services
+- Clear error boundaries
 
-### Example: Product Selection
+## State Machine Pattern (Optional)
 
-When customer types "netflix" during browsing step:
+Define discrete states for multi-step flows (e.g., `idle`, `collecting_input`, `processing`,
+`completed`). Store in session/context object. Transition via explicit function
+`transition(state, event)`.
 
-- `MessageDispatcher` receives message, validates not from group
-- `MessageRouter` sees step='browsing', routes to `CustomerHandler.handleProductSelection()`
-- `CustomerHandler` uses `FuzzySearch` utility (in `src/utils/`) to find product
-- Handler calls `CartService.add()` to add product to cart
-- Handler returns confirmation message
-- Dispatcher sends reply to customer
+Benefits: predictable flow control, easier debugging, resilience to partial failures.
 
-### Key Advantages
+## Configuration Pattern
 
-- Each component has single responsibility
-- Easy to test each step independently
-- Easy to add middleware (logging, rate limiting, validation)
-- Clear error handling boundaries
-- Services are reusable across handlers
-
-## Session State Machine
-
-Three states in `sessionManager.js`:
-
-- `menu` - Initial state, customer selects action (browse/cart/about/support)
-- `browsing` - Customer can type product names to add to cart
-- `checkout` - Customer reviews cart, can checkout or clear
-
-**Critical:** Always call `sessionManager.setStep()` when transitioning states. The step determines which handler processes the next message.
-
-## Product Configuration
-
-Products in `config.js` have structure: `{ id, name, price, description, stock, category }`.
-
-- Use `getProductById(id)` for exact matches
-- `getAllProducts()` merges premium accounts + virtual cards with category labels
-- Stock controlled by `DEFAULT_STOCK` and `VCC_STOCK` env vars
-
-**Customization:** To add products, extend `products.premiumAccounts` or `products.virtualCards` arrays. Product ID must be unique and URL-safe (used for matching).
+Centralize config in `config/` with environment override precedence: defaults → env vars → runtime
+flags. Provide accessor `getConfig()` returning a frozen object.
 
 ## Error Handling Pattern
 
-All errors in `index.js` message handler:
+Categorize errors: | Category | Example | Action | |----------|---------|--------| | Validation |
+Missing field | 400 / structured error object | | Auth | Invalid token | 401 / refresh instructions
+| | External | API timeout | Retry/backoff, fallback cache | | Internal | Null pointer | Log &
+generic message |
 
-1. Log to console with emoji prefix (❌)
-2. Reply to customer with friendly message + support instructions
-3. Never expose technical details to customers
-
-## VPS Optimization
-
-Puppeteer config in `index.js` disables GPU, 2D canvas, uses single-process mode for minimal memory footprint:
-
-```javascript
-args: [
-  "--no-sandbox",
-  "--disable-setuid-sandbox",
-  "--disable-dev-shm-usage",
-  "--single-process",
-  "--disable-gpu",
-];
-```
-
-**Do not remove these flags** - they're essential for 2GB RAM constraint.
-
-## AI/Gemini Integration Pattern
-
-Uses Vercel AI SDK with Gemini 2.5 Flash for intelligent features:
-
-### AIService Pattern
-
-- Rate limiting: 5 calls/hour per customer via Redis
-- Cost tracking: ~$0.00005 per call (97% cheaper than GPT-4o)
-- Fallback-first: Gracefully degrades if API unavailable
-- Streaming support for long responses
-
-### AI Fallback Handler
-
-New feature (Nov 6, 2025): Intelligently responds to unrecognized messages
-
-**Flow:**
-
-1. `RelevanceFilter` - Checks if message is shop-related (spam detection)
-2. `AIIntentClassifier` - Classifies intent (product_qa, comparison, pricing, etc.)
-3. `AIPromptBuilder` - Builds context-aware prompt
-4. `AIService` - Calls Gemini API
-5. Format response with commands and emoji
-
-**Integration Points:**
-
-```javascript
-// CustomerHandler - typo correction fallback
-if (!product) {
-  const aiSuggestion = await this.aiService.correctTypo(message, products);
-  if (aiSuggestion) return aiSuggestion;
-}
-
-// AdminHandler - AI-generated descriptions
-handleGenerateDescription(adminId, productName) {
-  const description = await this.aiHandler.generateProductDescription(productName);
-  return description;
-}
-
-// MessageRouter - AI fallback for unrecognized commands
-if (response.includes('tidak valid')) {
-  const aiResponse = await this.aiFallbackHandler.handle(customerId, message);
-  if (aiResponse) return aiResponse;
-}
-```
-
-### Configuration
-
-`src/config/ai.config.js`:
-
-- Enable/disable AI features globally
-- Adjust rate limits, costs, model settings
-- Feature toggles for typo correction, Q&A, recommendations, fallback
-
-### Testing
-
-Mock AIService in tests to avoid API costs during CI/CD
+Log with correlation IDs for multi-service tracing.
 
 ## Rate Limiting Pattern
 
-Implemented in `sessionManager.js`:
+Token-bucket or fixed window:
 
-```javascript
-// Track messages per customer
-this.messageCount = new Map(); // customerId -> {count, resetTime}
-
-canSendMessage(customerId) {
-  const limit = 20; // messages per minute
-  const now = Date.now();
-  const data = this.messageCount.get(customerId) || {count: 0, resetTime: now + 60000};
-
-  if (now > data.resetTime) {
-    data.count = 0;
-    data.resetTime = now + 60000;
-  }
-
-  if (data.count >= limit) return false;
-  data.count++;
-  this.messageCount.set(customerId, data);
-  return true;
+```
+canProceed(key) {
+  // key: userId/IP
+  const limit = 100; // per window
+  const windowMs = 60000;
+  // storage lookup & update ...
 }
 ```
 
-In `index.js`, check before replying: `if (!sessionManager.canSendMessage(customerId)) return;`
+Use in middleware before hitting handlers.
 
-## Admin Command Pattern
+## Delegation Pattern
 
-Admin commands in `chatbotLogic.js`:
+For growing modules: split into sub-handlers (e.g., `UserHandler`, `BillingHandler`). Main router
+maps operation → handler method. Keeps files small (< size threshold) and improves cohesion.
 
-- `/stats` - Show active sessions count, total orders today
-- `/broadcast <message>` - Send to all active customers
-- `/stock <productId> <quantity>` - Update product stock
-- `/approve <orderId>` - Manually approve payment
-- `/ban <number>` - Block customer
+## Caching Pattern
 
-Implement in `processMessage()` before normal flow:
+Read-through cache:
 
-```javascript
-if (message.startsWith("/") && isAdmin(customerId)) {
-  return this.handleAdminCommand(customerId, message);
+```
+async getUser(id) {
+  const cached = await cache.get(id);
+  if (cached) return cached;
+  const user = await db.find(id);
+  await cache.set(id, user, { ttl: 300 });
+  return user;
 }
 ```
 
-Admin number whitelist in `config.js`:
+Avoid caching mutable data without invalidation strategy.
 
-```javascript
-const ADMIN_NUMBERS = [process.env.ADMIN_NUMBER_1, process.env.ADMIN_NUMBER_2];
+## Observability Pattern
 
-function isAdmin(customerId) {
-  return ADMIN_NUMBERS.includes(customerId);
-}
+Wrap critical external calls with timing + success flag; emit structured logs:
+
 ```
+log.info({ op: 'fetchUser', ms: duration, success: true });
+```
+
+Add metrics if stack supports (counter, histogram).
+
+## Feature Flag Pattern
+
+Simple boolean flags or percentage rollout stored in config; guard new logic:
+
+```
+if (flags.newPricingModel) { ... } else { ... }
+```
+
+## Testing Guidelines
+
+| Layer         | Test Type          | Focus                                   |
+| ------------- | ------------------ | --------------------------------------- |
+| Utils         | Unit               | Pure functions, edge cases              |
+| Services      | Unit + integration | External interactions mocked vs sandbox |
+| Handlers      | Unit               | Input → output correctness              |
+| Router        | Integration        | Route resolution & middleware ordering  |
+| State machine | Unit               | Event → state transitions               |
+
+Mock external APIs; assert side effects (logs, metrics) when relevant.
+
+## Performance Considerations
+
+- Avoid synchronous CPU-heavy loops in request path; offload to worker/batch.
+- Use connection pooling for DB / HTTP clients.
+- Stream large payloads where possible.
+
+## Security Checklist
+
+- Input sanitization (avoid injection attacks)
+- Output encoding (XSS prevention for web)
+- Principle of least privilege for credentials
+- Secure storage of secrets (never in source)
+- Audit logging for sensitive operations
+
+## Internationalization (Optional)
+
+Store translations as key-value JSON; never hardcode copy in logic. Provide fallback language.
+
+## Extensibility Tips
+
+- Define stable interfaces at domain boundaries.
+- Prefer composition over inheritance for service augmentation.
+- Document assumptions inline (JSDoc or comments) for non-obvious logic.
+
+## Anti-Patterns to Avoid
+
+- God object handlers doing unrelated tasks.
+- Hidden global mutable state.
+- Catch-all error swallowing stack traces.
+- Overuse of caching without invalidation.
+
+## Template TODO (Customize for Your Project)
+
+- [ ] Define core domain modules
+- [ ] List external integrations in integration guidelines
+- [ ] Establish logging format & correlation ID strategy
+- [ ] Pick rate limiting algorithm
+- [ ] Decide on feature flag storage
+
+---
+
+Adapt these patterns; remove what you don't use.

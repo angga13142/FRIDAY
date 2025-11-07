@@ -10,8 +10,18 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Initial project setup from AI Assistant Template
+- Persona few-shots examples: `.github/instructions/persona-fewshots.md`
+- Persona validator script: `.github/scripts/persona-validate.js`
 
 ### Changed
+
+- Generalized instruction set to be project-agnostic:
+  - `architecture.md`, `integration.md`, `patterns.md`, `recent-features.md`, `common-tasks.md`,
+    `file-reference.md`, `gotchas.md`
+- Updated main persona config: `.github/copilot-instructions.md` (cleaned up, linked all persona
+  artifacts, added operating protocol and quality gates)
+- Updated `README.md` to "Persona & Memory Assistant Template" and added validator usage
+- Updated memory index with Persona Enhancements section: `.github/memory/INDEX.md`
 
 ### Deprecated
 

@@ -1,197 +1,80 @@
-# Critical Gotchas & Troubleshooting
+# Critical Gotchas & Troubleshooting (Template)
 
-## 1. Session Data Not Persisted
+## 1. State Not Persisted
 
-**Problem:** Restarting the bot clears all carts.
+Problem: Restart clears in-memory state. Solution: Use external store (Redis/Postgres). Wrap access
+in repository/service; set TTL for ephemeral sessions.
 
-**Solution:** Use Redis for persistence:
+## 2. File Size / Complexity Creep
 
-```javascript
-// Install: npm install redis
-const redis = require('redis');
-const client = redis.createClient();
+Problem: Single module grows too large. Solution: Enforce size threshold (e.g., <700 lines). Apply
+delegation pattern, split by domain responsibility.
 
-// In sessionManager.js, replace Map with Redis:
-async getSession(customerId) {
-  const data = await client.get(`session:${customerId}`);
-  return data ? JSON.parse(data) : this.createSession(customerId);
-}
+## 3. Rate Limiting Missing
 
-async setSession(customerId, session) {
-  await client.set(`session:${customerId}`, JSON.stringify(session), {
-    EX: 1800 // 30 min TTL
-  });
-}
-```
+Problem: Abuse or accidental overload. Solution: Implement fixed window or token bucket middleware;
+expose config; add headers (`X-RateLimit-Remaining`).
 
-Redis auto-expires sessions and survives bot restarts.
+## 4. Secrets Leaked
 
-## 2. Product Stock Not Enforced
+Problem: Hardcoded API keys in source. Solution: Centralize env access; scan pre-commit; rotate
+leaked keys.
 
-**Problem:** Stock is decorative - no actual enforcement.
+## 5. Unhandled Errors
 
-**Solution:**
+Problem: Crashes or silent failures. Solution: Global error handler + typed error classes; log with
+correlation ID; return normalized error object.
 
-- In `handleCheckout()`, check `product.stock > 0` before allowing purchase
-- Decrement in `config.js`: `product.stock--` after successful payment
-- Use Redis or DB for stock persistence: `await redis.decr(`stock:${productId}`)`
-- Add stock notifications: alert admin when `stock < 3`
+## 6. Missing Observability
 
-## 3. Payment is Manual
+Problem: Hard to trace performance issues. Solution: Add structured logs (op, duration, success),
+metrics (latency histogram), and optional tracing.
 
-**Problem:** Product delivery requires manual intervention.
+## 7. Cache Staleness
 
-**Solution:** To automate delivery:
+Problem: Serving outdated data. Solution: Add invalidation strategy (time-based + event-driven).
+Include ETag for HTTP responses.
 
-- On payment confirmation, call `deliverProduct(customerId, productId)`
-- For accounts: read credentials from `products_data/${productId}.txt` (one per line)
-- Send to customer: `client.sendMessage(customerId, 'Your credentials:\nEmail: ...\nPassword: ...')`
-- For VCC: integrate with card issuer API or send pre-generated card details
-- Log delivery: append to `deliveries.log` for accounting
+## 8. Concurrency Conflicts
 
-## 4. WhatsApp Rate Limits
+Problem: Race conditions updating shared resources. Solution: Use optimistic locking (version field)
+or distributed locks (Redis Redlock) for critical sections.
 
-**Problem:** Sending too many messages can trigger WhatsApp ban.
+## 9. Inefficient Queries
 
-**Solution:** Implemented! Rate limiting: 20 messages/minute per customer with auto-reset. Protects from bans.
+Problem: N+1 query patterns. Solution: Add batching layer, use JOINs or SELECT IN, add indices;
+profile with EXPLAIN.
 
-Current implementation in `sessionManager.js`:
+## 10. Feature Flag Drift
 
-```javascript
-canSendMessage(customerId) {
-  const limit = 20; // messages per minute
-  // ... rate limiting logic
-}
-```
+Problem: Old flags accumulate. Solution: Flag lifecycle policy: introduce → evaluate →
+remove/archive after expiry date.
 
-## 5. Group Messages Ignored
+## Troubleshooting Checklist
 
-**Behavior:** Bot only responds to direct messages (1:1 chats).
+| Symptom         | Checks                                              |
+| --------------- | --------------------------------------------------- |
+| Slow responses  | DB latency, cache hit rate, external API timeouts   |
+| High error rate | Recent deploy diff, error logs categories           |
+| Memory leak     | Heap snapshot comparison, long-lived listeners      |
+| Timeouts        | Retry storm, circuit breaker status, dependency SLA |
 
-**Reason:** Group messages are filtered in `MessageRouter`:
+## Debug Workflow
 
-```javascript
-shouldIgnore(message) {
-  return message.from.includes("@g.us") || message.from === "status@broadcast";
-}
-```
+1. Reproduce minimal failing case.
+2. Categorize (performance, correctness, infra).
+3. Gather metrics/logs.
+4. Form hypothesis; create small test or sandbox script.
+5. Apply fix; verify with tests + metrics.
+6. Document root cause + remediation.
 
-**To enable group support:** Remove the `@g.us` check (not recommended for shopping bots).
+## Preventative Measures
 
-## 6. Media Messages Require Special Handling
+- Pre-deploy smoke tests.
+- Static analysis (lint, complexity thresholds).
+- Dependency audit (monthly).
+- Automated secret scan.
 
-**Issue:** Images, documents, audio need different processing.
+---
 
-**Solution:**
-
-- `message.hasMedia` must be checked separately
-- Download with `await message.downloadMedia()`
-- Send with `MessageMedia.fromFilePath(path)` or `MessageMedia.fromUrl(url)`
-- Supports images (QRIS), documents (invoices), audio (voice notes)
-
-## 7. WhatsApp Web Session Can Expire
-
-**Issue:** Session expires, bot stops responding.
-
-**Solution:** Monitor `disconnected` event:
-
-```javascript
-client.on("disconnected", async (reason) => {
-  console.log("❌ Client disconnected:", reason);
-
-  // Implement auto-reconnect with exponential backoff
-  setTimeout(() => {
-    client.initialize();
-  }, 5000);
-});
-```
-
-**Backup `.wwebjs_auth/` directory daily** - contains session data.
-
-## 8. Message Order Not Guaranteed
-
-**Issue:** WhatsApp can deliver messages out of order under poor network.
-
-**Solution:** Use message IDs for idempotency:
-
-```javascript
-const msgId = message.id._serialized;
-
-// Check if already processed
-if (processedMessages.has(msgId)) {
-  return; // Skip duplicate
-}
-
-processedMessages.add(msgId);
-// Process message...
-```
-
-## 9. File Size Limit (700 lines)
-
-**Issue:** GitHub Actions blocks files > 700 lines in `src/`.
-
-**Solution:** Use handler delegation pattern:
-
-1. Check file size FIRST before adding code
-2. If >650 lines, create new `*Handler.js` file
-3. Delegate from main handler
-
-## 10. AI Rate Limit Exceeded
-
-**Issue:** Customer sees "AI Rate Limit" message too often.
-
-**Solution:** Adjust in `src/config/ai.config.js`:
-
-```javascript
-rateLimit: {
-  maxCallsPerHour: 10,  // Increase from 5
-}
-```
-
-Or check if message is truly shop-related (improve RelevanceFilter).
-
-## Troubleshooting Common Issues
-
-### Bot Not Responding
-
-**Check:**
-
-1. Is bot running? `pm2 status whatsapp-bot`
-2. Check logs: `pm2 logs whatsapp-bot`
-3. Is WhatsApp Web session valid?
-4. Check rate limiting status
-
-### Tests Failing
-
-**Check:**
-
-1. Run `npm run lint` first
-2. Check for mock setup issues
-3. Verify test file structure
-4. Check for hardcoded values
-
-### Payment Not Working
-
-**Check:**
-
-1. Xendit API key valid?
-2. Webhook endpoint accessible?
-3. Check webhook logs
-4. Verify order ID format
-
-### AI Not Working
-
-**Check:**
-
-1. Is `AI_ENABLE=true` in .env?
-2. Is `GOOGLE_API_KEY` set?
-3. Check AI service logs
-4. Verify message relevance (RelevanceFilter)
-
-### Session Lost
-
-**Check:**
-
-1. Is Redis running?
-2. Check session expiry (default 30 min)
-3. Verify session storage implementation
+Adapt items to your stack; remove those not applicable.
