@@ -9,6 +9,7 @@
 ## 🎯 Vision
 
 **Problem with Current Approach:**
+
 - Template repository requires manual cloning
 - Manual configuration for each new project
 - Redis setup is manual
@@ -16,6 +17,7 @@
 - Not portable across projects
 
 **FRIDAY MCP Server Solution:**
+
 ```bash
 # In any new project:
 User: "#friday-setup web"
@@ -132,6 +134,7 @@ friday-mcp-server/
 **Purpose:** Initialize FRIDAY in current project
 
 **Input:**
+
 ```typescript
 {
   projectType?: "web" | "api" | "cli" | "auto-detect",
@@ -141,6 +144,7 @@ friday-mcp-server/
 ```
 
 **Actions:**
+
 1. Detect/confirm project type
 2. Create `.github/memory/` structure:
    - implementations/
@@ -155,6 +159,7 @@ friday-mcp-server/
 8. Activate FRIDAY persona
 
 **Output:**
+
 ```
 ✅ FRIDAY Setup Complete
 
@@ -181,6 +186,7 @@ FRIDAY is now active! 🤖
 **Input:** None
 
 **Actions:**
+
 1. Check INDEX.md freshness
 2. Check current-state.md age
 3. Count files by category
@@ -188,6 +194,7 @@ FRIDAY is now active! 🤖
 5. Check Redis connection (if enabled)
 
 **Output:**
+
 ```
 📊 Memory Health Report
 
@@ -212,6 +219,7 @@ Redis: ✅ Connected (localhost:6379)
 **Purpose:** Load project context for AI
 
 **Input:**
+
 ```typescript
 {
   sources?: "git" | "redis" | "hybrid",
@@ -220,6 +228,7 @@ Redis: ✅ Connected (localhost:6379)
 ```
 
 **Actions:**
+
 1. Load INDEX.md
 2. Load current-state.md
 3. Load recent implementations (last 7 days)
@@ -235,6 +244,7 @@ Redis: ✅ Connected (localhost:6379)
 **Purpose:** Update memory after work
 
 **Input:**
+
 ```typescript
 {
   type: "implementation" | "decision" | "issue",
@@ -245,6 +255,7 @@ Redis: ✅ Connected (localhost:6379)
 ```
 
 **Actions:**
+
 1. Create memory file in appropriate directory
 2. Update current-state.md (if requested)
 3. Update INDEX.md
@@ -252,6 +263,7 @@ Redis: ✅ Connected (localhost:6379)
 5. Run lifecycle check
 
 **Output:**
+
 ```
 ✅ Memory Updated
 
@@ -269,6 +281,7 @@ Memory is fresh!
 **Purpose:** Show/update FRIDAY configuration
 
 **Input:**
+
 ```typescript
 {
   action: "show" | "update",
@@ -281,6 +294,7 @@ Memory is fresh!
 ```
 
 **Output:**
+
 ```
 🔧 FRIDAY Configuration
 
@@ -304,6 +318,7 @@ Lifecycle:
 ## 🔄 Memory System (Hybrid)
 
 ### **Git Memory** (Structured Documentation)
+
 ```
 .github/memory/
 ├── INDEX.md               # Project overview
@@ -315,12 +330,14 @@ Lifecycle:
 ```
 
 **Characteristics:**
+
 - ✅ Version controlled
 - ✅ Team visible
 - ✅ Structured & reviewable
 - ✅ Free (no cost)
 
 **Best For:**
+
 - Architecture decisions
 - Implementation details
 - Known issues & solutions
@@ -328,6 +345,7 @@ Lifecycle:
 ---
 
 ### **Redis Memory** (Semantic & Fast)
+
 ```
 Redis Keys:
 - friday:project:{id}:index
@@ -337,12 +355,14 @@ Redis Keys:
 ```
 
 **Characteristics:**
+
 - ✅ Fast semantic search
 - ✅ Session persistence
 - ✅ Cross-project context
 - ✅ Recency-aware ranking
 
 **Best For:**
+
 - User preferences
 - Session context
 - Quick notes
@@ -385,11 +405,11 @@ FRIDAY:
   📝 Deploying copilot instructions...
   🔌 Redis detected at localhost:6379
   ✅ FRIDAY activated!
-  
+
   Project: my-web-app
   Type: Web Application
   Memory: Hybrid (Git + Redis)
-  
+
   Ready to assist! What would you like to build?
 
 User: "Let's add authentication with JWT"
@@ -397,13 +417,13 @@ User: "Let's add authentication with JWT"
 FRIDAY:
   [Loads context silently]
   [Knows: new project, web app, no auth yet]
-  
+
   I'll implement JWT authentication. Here's the plan:
   1. Install dependencies (jsonwebtoken, bcryptjs)
   2. Create auth middleware
   3. Add login/register routes
   4. Setup token validation
-  
+
   [Implements feature]
   [Updates memory automatically]
 ```
@@ -423,18 +443,18 @@ User: "How's the authentication coming along?"
 
 FRIDAY:
   [Loads from memory]
-  
+
   Authentication is implemented! ✅
-  
+
   Last update: Nov 7, 2025
   Implementation: JWT-based auth
   Status: Tested & working
-  
+
   Files:
   - src/middleware/auth.js
   - src/routes/auth.js
   - tests/auth.test.js
-  
+
   What would you like to improve?
 ```
 
@@ -443,24 +463,27 @@ FRIDAY:
 ## 📊 Benefits
 
 ### **For Developers:**
+
 ✅ **Zero manual setup** - One command, everything ready  
 ✅ **Portable** - Works in any project  
 ✅ **Consistent** - Same FRIDAY experience everywhere  
 ✅ **No copy-paste** - Persona & configs built-in  
-✅ **Centralized updates** - Update MCP once, all projects benefit  
+✅ **Centralized updates** - Update MCP once, all projects benefit
 
 ### **For FRIDAY:**
+
 ✅ **Always has persona** - Never forgets how to behave  
 ✅ **Memory ready instantly** - Git + Redis configured  
 ✅ **Context never lost** - Persistent across sessions  
 ✅ **Semantic search** - Find relevant context fast  
-✅ **Cross-project learning** - Share knowledge between projects  
+✅ **Cross-project learning** - Share knowledge between projects
 
 ---
 
 ## 🎯 Implementation Roadmap
 
 ### **Phase 1: MCP Server Foundation** (Week 1-2)
+
 - [ ] Setup MCP server boilerplate (TypeScript)
 - [ ] Implement `friday-setup` tool
 - [ ] Bundle copilot-instructions
@@ -468,6 +491,7 @@ FRIDAY:
 - [ ] Basic tests (20+ tests)
 
 ### **Phase 2: Redis Integration** (Week 3-4)
+
 - [ ] Redis auto-detection
 - [ ] Hybrid memory implementation
 - [ ] Semantic search integration
@@ -475,12 +499,14 @@ FRIDAY:
 - [ ] Integration tests
 
 ### **Phase 3: Advanced Features** (Week 5-6)
+
 - [ ] Project templates (web, api, cli)
 - [ ] Context migration between projects
 - [ ] Memory lifecycle automation
 - [ ] Performance optimization
 
 ### **Phase 4: Polish & Documentation** (Week 7-8)
+
 - [ ] Complete documentation
 - [ ] Usage examples
 - [ ] Video tutorials
@@ -491,19 +517,23 @@ FRIDAY:
 ## 🔧 Technical Stack
 
 **Server:**
+
 - TypeScript
 - @modelcontextprotocol/sdk
 - Node.js 18+
 
 **Memory:**
+
 - Git (local filesystem)
 - Redis (optional, via ioredis)
 
 **Testing:**
+
 - Jest
 - Supertest (for MCP protocol)
 
 **Packaging:**
+
 - npm (public or private)
 - Docker (optional for Redis)
 
@@ -512,6 +542,7 @@ FRIDAY:
 ## 📝 Configuration Example
 
 **~/.config/friday-mcp/config.json**
+
 ```json
 {
   "version": "1.0.0",
@@ -545,17 +576,20 @@ FRIDAY:
 ## 🔐 Security Considerations
 
 **Git Memory:**
+
 - ✅ No secrets in memory files
 - ✅ .gitignore for sensitive data
 - ✅ Review before commit
 
 **Redis:**
+
 - ✅ Local only by default
 - ✅ Authentication required for remote
 - ✅ Encryption in transit (TLS)
 - ✅ No PII without consent
 
 **MCP Server:**
+
 - ✅ Sandboxed execution
 - ✅ No network access (unless configured)
 - ✅ File access limited to project dir
@@ -565,16 +599,19 @@ FRIDAY:
 ## 🌟 Future Enhancements
 
 **Team Collaboration:**
+
 - Shared Redis for team context
 - Multi-user memory permissions
 - Conflict resolution
 
 **Advanced Memory:**
+
 - Vector embeddings for semantic search
 - Auto-summarization of old files
 - Cross-project pattern detection
 
 **AI Capabilities:**
+
 - Fine-tuned FRIDAY model
 - Domain-specific expertise
 - Code generation templates
@@ -584,11 +621,13 @@ FRIDAY:
 ## 📚 References
 
 **Related Documents:**
+
 - `docs/SMART_MEMORY_ENFORCEMENT.md` - Current memory system
 - `docs/POWERFUL_AI_MEMORY_SOLUTIONS.md` - Redis research
 - `.github/copilot-instructions.md` - Current persona
 
 **External:**
+
 - [Model Context Protocol Spec](https://modelcontextprotocol.io)
 - [Redis Agent Memory Server](https://github.com/redis/agent-memory-server)
 - [MCP SDK Documentation](https://github.com/modelcontextprotocol/sdk)
@@ -607,6 +646,6 @@ FRIDAY:
 
 **Status:** Vision Document  
 **Last Updated:** November 8, 2025  
-**Author:** FRIDAY Development Team  
+**Author:** FRIDAY Development Team
 
 **Ready to build the future of AI-assisted development! 🚀**

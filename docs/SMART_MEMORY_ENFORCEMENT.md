@@ -359,6 +359,7 @@ git push origin main
 **Script:** `.github/scripts/memory-lifecycle.sh`
 
 **Features:**
+
 - ✅ Track file age
 - ✅ Identify stale files (>30 days)
 - ✅ Auto-archive old files (>90 days)
@@ -377,21 +378,25 @@ Cleanupable → 180+ days   → Safe to delete
 ### Usage
 
 **Check Memory Health:**
+
 ```bash
 bash .github/scripts/memory-lifecycle.sh check
 ```
 
 **Show Statistics:**
+
 ```bash
 bash .github/scripts/memory-lifecycle.sh stats
 ```
 
 **Archive Old Files:**
+
 ```bash
 bash .github/scripts/memory-lifecycle.sh archive
 ```
 
 **Cleanup Very Old:**
+
 ```bash
 bash .github/scripts/memory-lifecycle.sh cleanup
 ```
@@ -401,20 +406,25 @@ bash .github/scripts/memory-lifecycle.sh cleanup
 **MANDATORY after significant work:**
 
 1. **Update current-state.md**
+
    - Current focus/phase
    - Recent accomplishments
    - Known issues
 
 2. **Create implementation file** (for features)
+
    ```
    .github/memory/implementations/feature-name-nov8-2025.md
    ```
+
    Include: context, what changed, why, consequences
 
 3. **Document decisions** (for architecture)
+
    ```
    .github/memory/decisions/decision-name-nov8-2025.md
    ```
+
    Include: problem, options, chosen solution, rationale
 
 4. **Log issues** (for bugs)
