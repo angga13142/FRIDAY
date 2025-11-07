@@ -300,29 +300,28 @@ functionality with Y performance.
 
 ---
 
-## Environment Variables
+## Environment Variables (Template)
 
-Create `.env` file:
+Create `.env` file as needed for your stack. Example:
 
 ```bash
 # Application
-USE_PAIRING_CODE=false           # true for pairing code, false for QR
-PAIRING_PHONE_NUMBER=            # Phone number for pairing (e.g., 6281234567890)
+APP_ENV=development
+PORT=3000
 
-# Admin
-ADMIN_NUMBER=6281234567890       # Admin Application number
+# Admin / Contact (optional)
+ADMIN_CONTACT="+620000000000"    # e.g., phone or email
 
-# Payment (Xendit)
-XENDIT_API_KEY=your_key_here
-XENDIT_CALLBACK_TOKEN=your_token
+# Payment (example)
+PAYMENT_API_KEY=your_payment_api_key
+PAYMENT_CALLBACK_TOKEN=your_callback_token
 
-# AI (Gemini)
-GOOGLE_API_KEY=your_gemini_key
-AI_ENABLE=true                   # Enable AI features
+# AI (example)
+AI_PROVIDER_API_KEY=your_ai_api_key
+AI_ENABLE=true
 
-# Stock
-DEFAULT_STOCK=999
-VCC_STOCK=50
+# Feature flags (example)
+FEATURE_FLAG_EXPERIMENTAL=false
 ```
 
 ## Quick Stats
