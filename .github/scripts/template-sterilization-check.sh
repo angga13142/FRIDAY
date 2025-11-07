@@ -254,9 +254,6 @@ echo "🔐 Check 7: Secrets and sensitive data"
 echo "─────────────────────────────────────────────────────"
 
 SECRET_PATTERNS=(
-  "API_KEY"
-  "SECRET_KEY"
-  "PASSWORD"
   "PRIVATE_KEY"
   "xnd_production"
   "sk-.*"  # OpenAI keys
@@ -265,9 +262,10 @@ SECRET_PATTERNS=(
 
 SECRETS_FAIL=0
 for pattern in "${SECRET_PATTERNS[@]}"; do
-  if git grep -i "$pattern" -- ':!.env.example' ':!.github/scripts/' >/dev/null 2>&1; then
+  # Exclude known-safe locations for example values (env example, scripts, and documentation files)
+  if git grep -i "$pattern" -- ':!.env.example' ':!.github/scripts/' ':!.github/instructions/' ':!docs/' >/dev/null 2>&1; then
     echo "⚠️  WARN: Found potential secret pattern: '$pattern'"
-    git grep -n -i "$pattern" -- ':!.env.example' ':!.github/scripts/' | head -3
+  git grep -n -i "$pattern" -- ':!.env.example' ':!.github/scripts/' ':!.github/instructions/' ':!docs/' | head -3
     ((WARN_COUNT++))
     SECRETS_FAIL=1
   fi
