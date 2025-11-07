@@ -158,9 +158,10 @@ PATTERNS=(
 CONTENT_FAIL=0
 for pattern in "${PATTERNS[@]}"; do
   # Exclude memory/ and docs/ folders (allowed to have examples)
-  if git grep -i "$pattern" -- ':!.github/memory/' ':!docs/' ':!CHANGELOG.md' ':!.github/scripts/template-sterilization-check.sh' >/dev/null 2>&1; then
+  # Also exclude friday-workflow.md (contains example project names for documentation)
+  if git grep -i "$pattern" -- ':!.github/memory/' ':!docs/' ':!CHANGELOG.md' ':!.github/scripts/template-sterilization-check.sh' ':!.github/instructions/friday-workflow.md' >/dev/null 2>&1; then
     echo "⚠️  WARN: Found potential hardcoded content: '$pattern'"
-    git grep -n -i "$pattern" -- ':!.github/memory/' ':!docs/' ':!CHANGELOG.md' ':!.github/scripts/template-sterilization-check.sh' | head -3
+    git grep -n -i "$pattern" -- ':!.github/memory/' ':!docs/' ':!CHANGELOG.md' ':!.github/scripts/template-sterilization-check.sh' ':!.github/instructions/friday-workflow.md' | head -3
     ((WARN_COUNT++))
     CONTENT_FAIL=1
   fi
