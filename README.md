@@ -31,7 +31,21 @@ This is a **project-agnostic AI persona configuration template** that gives you:
 
 ---
 
-## 🚀 Cara Menjalankan
+## 🚀 Quick Start
+
+### Option 1: Use "hey friday" Trigger (Recommended)
+
+The fastest way to set up a new project:
+
+1. Clone this template
+2. Open in VS Code with GitHub Copilot
+3. In Copilot Chat, type: **"hey friday"**
+4. Answer a few quick questions (project name, type, tech stack)
+5. Done! Template configured automatically
+
+See [FRIDAY Workflow Guide](.github/instructions/friday-workflow.md) for details.
+
+### Option 2: Use GitHub Template (Manual)
 
 ```bash
 # Instal dependency

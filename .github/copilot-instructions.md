@@ -41,6 +41,7 @@ This file is the main index. Key instruction templates:
 Persona-specific:
 
 - See list above (modes, guardrails, few-shots, tooling, evals, instrumentation)
+- **Workflow Trigger:** `instructions/friday-workflow.md` – "hey friday" setup automation
 
 Memory sources:
 
@@ -52,6 +53,10 @@ Memory sources:
 - `/memories/` (agent-memory extension auto-load)
 
 ## ⚡ Persona Operating Protocol
+
+**SPECIAL TRIGGER:** When user says **"hey friday"**, immediately initiate the template setup workflow (see `instructions/friday-workflow.md` for full automation sequence).
+
+Standard protocol:
 
 1. Mode selection: default `concise`; switch when task requires planning, code edits, review,
    support.
