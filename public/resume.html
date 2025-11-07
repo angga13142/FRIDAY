@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muhammad Nurhidayat Gani - Resume</title>
+  <style>
+    @media print {
+      body { margin: 0; padding: 0; }
+      .no-print { display: none; }
+      @page { margin: 0.5in; }
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 8.5in;
+      margin: 0 auto;
+      padding: 0.5in;
+      background: #fff;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 3px solid #3b82f6;
+      padding-bottom: 1rem;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      color: #1e293b;
+      margin-bottom: 0.25rem;
+    }
+    
+    .subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    
+    .contact {
+      font-size: 0.9rem;
+      color: #475569;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .contact a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    
+    h2 {
+      font-size: 1.3rem;
+      color: #1e293b;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    
+    h3 {
+      font-size: 1.1rem;
+      color: #334155;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .job-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.25rem;
+    }
+    
+    .job-title h3 {
+      margin: 0;
+    }
+    
+    .date {
+      font-size: 0.9rem;
+      color: #64748b;
+      font-style: italic;
+    }
+    
+    .company {
+      font-size: 0.95rem;
+      color: #64748b;
+      margin-bottom: 0.5rem;
+    }
+    
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    li {
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+    
+    strong {
+      color: #1e293b;
+    }
+    
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    
+    .skill-category {
+      background: #f8fafc;
+      padding: 0.75rem;
+      border-radius: 0.25rem;
+      border-left: 3px solid #3b82f6;
+    }
+    
+    .skill-category h4 {
+      font-size: 0.95rem;
+      color: #334155;
+      margin-bottom: 0.5rem;
+    }
+    
+    .skill-category p {
+      font-size: 0.85rem;
+      color: #475569;
+      line-height: 1.5;
+    }
+    
+    .summary {
+      background: #f1f5f9;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    
+    th, td {
+      padding: 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #334155;
+    }
+    
+    .achievement {
+      background: #eff6ff;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      margin-bottom: 0.5rem;
+      border-left: 3px solid #3b82f6;
+    }
+    
+    .print-button {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 2rem;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    
+    .print-button:hover {
+      background: #2563eb;
+    }
+    
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+      .skills, .two-column {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-button no-print" onclick="window.print()">🖨️ Print as PDF</button>
+
+  <div class="header">
+    <h1>Muhammad Nurhidayat Gani</h1>
+    <div class="subtitle">Heavy Equipment Operator | Software Developer</div>
+    <div class="contact">
+      <span>📧 mnhidayatgani@gmail.com</span>
+      <span>📱 +62 853-4590-2520</span>
+      <span>🔗 <a href="https://github.com/angga13142">GitHub</a></span>
+      <span>💼 <a href="https://linkedin.com/in/mnhidayatgani">LinkedIn</a></span>
+    </div>
+  </div>
+
+  <h2>Professional Summary</h2>
+  <div class="summary">
+    Results-driven professional transitioning from Heavy Equipment Operations to Software Development. Combining 5+ years of operational excellence (95% efficiency, 96% uptime) with emerging software engineering skills. Proven track record in safety leadership (40% incident reduction), system optimization, and team coordination. Currently building production-ready applications with focus on reliability, testing, and automation.
+  </div>
+
+  <h2>Technical Skills</h2>
+  <div class="skills">
+    <div class="skill-category">
+      <h4>Programming & Frameworks</h4>
+      <p>JavaScript, TypeScript, Node.js, React 18, Next.js 14, Astro, Express, Tailwind CSS</p>
+    </div>
+    <div class="skill-category">
+      <h4>AI & Automation</h4>
+      <p>Google Gemini API, Vercel AI SDK, NLP, Intent Classification, Prompt Engineering</p>
+    </div>
+    <div class="skill-category">
+      <h4>Testing & DevOps</h4>
+      <p>Jest (99.7% coverage), GitHub Actions CI/CD, PM2, VPS Management</p>
+    </div>
+    <div class="skill-category">
+      <h4>Database & Infrastructure</h4>
+      <p>Redis, PostgreSQL, Webhook Systems, Real-time Payment Integration</p>
+    </div>
+  </div>
+
+  <h2>Software Development Projects</h2>
+  
+  <div class="job-title">
+    <h3>WhatsApp E-Commerce Bot</h3>
+    <span class="date">Node.js, AI, Redis</span>
+  </div>
+  <div class="company">Full-stack automated shopping assistant</div>
+  <div class="achievement">
+    <strong>Impact:</strong> 100+ daily customers | 99% uptime | 99.7% test coverage (1121 tests) | 97% AI cost reduction
+  </div>
+  <ul>
+    <li>Built production system with AI (Gemini 2.5) for natural language processing</li>
+    <li>Optimized for low-resource VPS (300-500MB usage on 2GB RAM constraint)</li>
+    <li>Implemented dynamic product discovery & multi-payment gateway integration</li>
+    <li>Automated payment verification with webhooks and retry logic</li>
+    <li>Comprehensive CI/CD pipeline with GitHub Actions</li>
+  </ul>
+  <p><strong>Stack:</strong> Node.js 20, Express, WhatsApp Web.js, Gemini AI, Redis, Xendit, Jest</p>
+
+  <div class="job-title">
+    <h3>CryptoStock Financial News Portal</h3>
+    <span class="date">Next.js, TypeScript</span>
+  </div>
+  <div class="company">High-performance news aggregator with real-time market data</div>
+  <div class="achievement">
+    <strong>Impact:</strong> 95+ Lighthouse score | Top 3 Google rankings | 10K+ monthly readers | Sub-30s deployment
+  </div>
+  <ul>
+    <li>Next.js 14 with Static Site Generation (SSG) for optimal performance</li>
+    <li>Real-time crypto & stock market data integration</li>
+    <li>SEO optimization with structured data and meta tags</li>
+    <li>Mobile-first responsive design with Tailwind CSS</li>
+  </ul>
+  <p><strong>Stack:</strong> Next.js 14, React 18, TypeScript, Tailwind CSS, Vercel</p>
+
+  <h2>Heavy Equipment Operations Experience</h2>
+  
+  <div class="job-title">
+    <h3>Excavator Operator</h3>
+    <span class="date">2019 - 2024</span>
+  </div>
+  <div class="company">PT Mining Excellence | Nickel Mining Operations</div>
+  
+  <h4 style="margin-top: 0.75rem; font-size: 1rem; color: #334155;">Operational Excellence</h4>
+  <ul>
+    <li><strong>95% operational efficiency</strong> maintained consistently</li>
+    <li>Daily production: <strong>800-1,000 BCM</strong></li>
+    <li>Zero accident record across all positions</li>
+    <li>Operated excavators in challenging mining conditions</li>
+  </ul>
+
+  <h4 style="margin-top: 0.75rem; font-size: 1rem; color: #334155;">Safety Leadership</h4>
+  <ul>
+    <li>Reduced near-miss incidents by <strong>40%</strong></li>
+    <li>Achieved <strong>100% P2H compliance</strong> (Pre-Operation Check)</li>
+    <li>Recipient of <strong>Safety Champion Award</strong></li>
+    <li>Led safety protocol training for junior operators</li>
+  </ul>
+
+  <h4 style="margin-top: 0.75rem; font-size: 1rem; color: #334155;">Equipment Maintenance & Productivity</h4>
+  <ul>
+    <li>Maintained <strong>96% equipment uptime</strong></li>
+    <li>Reduced unplanned downtime by <strong>45%</strong></li>
+    <li>Generated annual cost savings of <strong>Rp 85M+</strong> per equipment</li>
+    <li>Increased productivity by <strong>23%</strong> through technique optimization</li>
+    <li>Reduced fuel consumption by <strong>18%</strong></li>
+  </ul>
+
+  <h2>Certifications & Licenses</h2>
+  <div class="two-column">
+    <div>
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Professional Certifications</h4>
+      <ul style="margin-left: 1rem;">
+        <li><strong>SIO Excavator</strong> (Non-Class) - 2023</li>
+        <li><strong>Heavy Equipment Training Certificate</strong> - 2023</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Driving Licenses</h4>
+      <ul style="margin-left: 1rem;">
+        <li><strong>SIM BII Umum</strong> (Heavy Vehicle) - 2023</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Key Achievements Summary</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Achievement</th>
+        <th>Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Operations</strong></td>
+        <td>95% efficiency</td>
+        <td>800-1,000 BCM daily</td>
+      </tr>
+      <tr>
+        <td><strong>Safety</strong></td>
+        <td>40% incident reduction</td>
+        <td>Safety Champion Award</td>
+      </tr>
+      <tr>
+        <td><strong>Equipment</strong></td>
+        <td>96% uptime</td>
+        <td>Rp 85M+ annual savings</td>
+      </tr>
+      <tr>
+        <td><strong>Software</strong></td>
+        <td>99% system uptime</td>
+        <td>100+ daily users</td>
+      </tr>
+      <tr>
+        <td><strong>Testing</strong></td>
+        <td>99.7% coverage</td>
+        <td>1121 passing tests</td>
+      </tr>
+      <tr>
+        <td><strong>Performance</strong></td>
+        <td>95+ Lighthouse</td>
+        <td>Top 3 Google rankings</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Core Competencies</h2>
+  <div class="two-column">
+    <div>
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Technical Skills</h4>
+      <ul style="margin-left: 1rem; font-size: 0.9rem;">
+        <li>Heavy equipment operation (Excavator)</li>
+        <li>Full-stack software development</li>
+        <li>System optimization & performance tuning</li>
+        <li>Test-driven development</li>
+        <li>CI/CD pipeline implementation</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Soft Skills</h4>
+      <ul style="margin-left: 1rem; font-size: 0.9rem;">
+        <li>Safety-first mindset</li>
+        <li>Problem-solving under pressure</li>
+        <li>Team leadership & mentoring</li>
+        <li>Process optimization</li>
+        <li>Documentation & reporting</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top: 2rem; padding-top: 1rem; border-top: 2px solid #e2e8f0; text-align: center; color: #64748b; font-size: 0.85rem;">
+    <p><strong>Languages:</strong> Bahasa Indonesia (Native) | English (Professional)</p>
+    <p style="margin-top: 0.5rem;">Last Updated: November 2025</p>
+    <p style="margin-top: 0.25rem; font-style: italic;">Career transition combining operational excellence with software engineering</p>
+  </div>
+
+  <script>
+    // Auto-print hint
+    console.log('💡 Tip: Press Ctrl+P (Windows/Linux) or Cmd+P (Mac) to save as PDF');
+  </script>
+</body>
+</html>
