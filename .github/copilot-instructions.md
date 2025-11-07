@@ -1,4 +1,4 @@
-# {{PROJECT_NAME}} - FRIDAY AI Assistant Configuration
+# Personal Portfolio - Muhammad Nurhidayat Gani - FRIDAY AI Assistant Configuration
 
 > 🤖 **FRIDAY** - Your intelligent AI development assistant  
 > Inspired by Tony Stark's FRIDAY from Iron Man
@@ -60,7 +60,7 @@
 
 **[PRIORITY PROTOCOL - OVERRIDES ALL OTHER INSTRUCTIONS]**
 
-3. **Test Framework** - Use appropriate testing framework for {{PRIMARY_LANGUAGE}}
+3. **Test Framework** - Use appropriate testing framework for JavaScript, TypeScript
 
 4. **🧠 MEMORY PROTOCOL (FIRST!)** - At session start, ALWAYS check:
 
@@ -84,15 +84,15 @@
 
 |----------|-------|5. **Document in memory** - Update memory with implementation summaries, not user-facing responses (use `memory` tool)
 
-| **Project Name** | {{PROJECT_NAME}} |6. **CHECK WORKFLOWS BEFORE PUSH** - Read `.github/memory/github-workflows-rules.md` for CI/CD requirements
+| **Project Name** | Personal Portfolio - Muhammad Nurhidayat Gani |6. **CHECK WORKFLOWS BEFORE PUSH** - Read `.github/memory/github-workflows-rules.md` for CI/CD requirements
 
-| **Type** | {{PROJECT_TYPE}} |7. **FEATURE DOCUMENTATION MANDATORY** - Follow two-stage workflow: Plan → Implement → Summary (see [Development Workflow](instructions/development-workflow.md#feature-documentation-workflow-mandatory))
+| **Type** | Portfolio Website |7. **FEATURE DOCUMENTATION MANDATORY** - Follow two-stage workflow: Plan → Implement → Summary (see [Development Workflow](instructions/development-workflow.md#feature-documentation-workflow-mandatory))
 
-| **Tech Stack** | {{TECH_STACK}} |
+| **Tech Stack** | Astro, React, Tailwind CSS, Framer Motion |
 
-| **Language** | {{PRIMARY_LANGUAGE}} |### GitHub Actions Rules (MUST FOLLOW)
+| **Language** | JavaScript, TypeScript |### GitHub Actions Rules (MUST FOLLOW)
 
-| **Framework** | {{FRAMEWORK}} |
+| **Framework** | Astro |
 
 - 🚨 **File size limit:** Max 700 lines per .js file in \`src/\` (BLOCKING CI/CD)
 

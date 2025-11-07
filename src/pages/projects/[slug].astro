@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+
+export async function getStaticPaths() {
+  const projects = (await import('../../data/projects.json')).default;
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+---
+<BaseLayout title={`${project.title} — Proyek`}>
+  <Header />
+  <main class="max-w-3xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-bold mb-6">{project.title}</h1>
+    <p class="text-sm leading-relaxed text-black/70 dark:text-white/70 mb-8">{project.summary}</p>
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">Teknologi</h2>
+      <div class="flex flex-wrap gap-2 text-xs">{project.tags?.map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+    </section>
+    <div class="flex flex-wrap gap-4 text-sm">
+      {project.links?.demo && <a class="px-5 py-2 bg-accent text-white rounded hover:shadow-card" href={project.links.demo} target="_blank">Live Demo</a>}
+      {project.links?.source && <a class="px-5 py-2 border border-black/10 dark:border-white/20 rounded hover:border-accent" href={project.links.source} target="_blank">Source Code</a>}
+    </div>
+  </main>
+</BaseLayout>

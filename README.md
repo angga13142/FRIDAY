@@ -1,6 +1,6 @@
-# AI Assistant Template
+# Personal Portfolio — Muhammad Nurhidayat Gani
 
-> 🤖 **Powered by FRIDAY** - Your intelligent AI development assistant
+> 🚀 Dibangun dengan Astro + React (Islands) + Tailwind + Framer Motion
 
 [![GitHub Template](https://img.shields.io/badge/Template-Ready-brightgreen)](https://github.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -8,16 +8,12 @@
 
 ---
 
-## 🤖 Meet FRIDAY
+## ✨ Ringkasan
 
-**F**ully  
-**R**esponsive  
-**I**ntelligent  
-**D**evelopment  
-**A**ssistant for  
-**Y**ou
+Portofolio pribadi untuk menampilkan karya, kisah, dan keahlian: modern, minimalis, interaktif.
+Fokus pada personal branding transisi karier dari operator excavator → developer, dengan tagline:
 
-FRIDAY is your AI-powered development companion, inspired by Tony Stark's assistant from Iron Man. Professional, efficient, and always ready to help you build remarkable software.
+"Membangun Solusi Digital dengan Presisi Struktural."
 
 [![GitHub Template](https://img.shields.io/badge/Template-Ready-brightgreen)](https://github.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -37,192 +33,79 @@ This is a **production-ready AI assistant configuration template** that gives yo
 
 ---
 
-## 🚀 Quick Start
-
-### Option 1: Use GitHub Template (Recommended)
-
-1. Click **"Use this template"** button at top of repo
-2. Create your new repository
-3. Clone locally
-4. Run customization script:
+## 🚀 Cara Menjalankan
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_PROJECT.git
-cd YOUR_PROJECT
-./customize.sh
-```
+# Instal dependency
+npm install
 
-### Option 2: Manual Setup
+# Jalankan lokal
+npm run dev
 
-```bash
-# 1. Clone this template
-git clone https://github.com/YOUR_USERNAME/ai-assistant-template.git my-new-project
-cd my-new-project
-
-# 2. Remove git history
-rm -rf .git
-git init
-
-# 3. Customize configuration
-# Edit .github/copilot-instructions.md
-# Replace {{PROJECT_NAME}}, {{TECH_STACK}}, etc.
-
-# 4. Initialize memory
-# Edit .github/memory/INDEX.md
-# Create .github/memory/current-state.md
-
-# 5. Commit
-git add .
-git commit -m "feat: initialize project with AI assistant"
-git remote add origin YOUR_REPO_URL
-git push -u origin main
+# Build produksi
+npm run build
+npm run preview
 ```
 
 ---
 
-## 📂 What's Included
+## 📂 Struktur Proyek
 
 ```
-.github/
-├── copilot-instructions.md       # Main AI configuration (customize this!)
-├── instructions/                 # Modular instruction files
-│   ├── architecture.md          # System design patterns
-│   ├── development-workflow.md  # Commands, testing, deployment
-│   ├── patterns.md              # Code patterns & best practices
-│   ├── integration.md           # Integration guidelines
-│   ├── common-tasks.md          # Common modifications
-│   ├── gotchas.md               # Critical issues & troubleshooting
-│   ├── file-reference.md        # File-specific notes
-│   └── recent-features.md       # Feature history template
-└── memory/                       # Persistent memory system
-    ├── INDEX.md                  # Memory overview (customize this!)
-    ├── implementations/          # Feature implementations
-    ├── decisions/                # Architecture decisions
-    ├── issues/                   # Bugs & troubleshooting
-    └── archive/                  # Completed items
+src/
+├── components/                 # Header, ThemeToggle, ProjectCard, ProjectFilter
+├── layouts/                    # BaseLayout
+├── pages/                      # index, about, projects, projects/[slug], contact
+├── styles/                     # global.css (Tailwind)
+└── data/                       # projects.json
+public/
+├── favicon.svg
+└── resume.pdf (placeholder – ganti dengan file asli)
 ```
 
 ---
 
-## 🔧 Customization Guide
+## 🎨 Teknologi
 
-### Step 1: Update Main Configuration
-
-Edit `.github/copilot-instructions.md`:
-
-```markdown
-# Replace placeholders:
-
-{{PROJECT_NAME}} → Your project name
-{{PROJECT_TYPE}} → web/mobile/api/cli/chatbot
-{{TECH_STACK}} → Node.js/Python/React/Vue/etc
-{{PRIMARY_LANGUAGE}} → JavaScript/TypeScript/Python
-{{FRAMEWORK}} → Express/FastAPI/Next.js/etc
-```
-
-### Step 2: Customize Instructions
-
-Update files in `.github/instructions/`:
-
-- **architecture.md** - Your project structure
-- **patterns.md** - Your code patterns
-- **development-workflow.md** - Your commands & workflows
-
-### Step 3: Initialize Memory
-
-Create `.github/memory/current-state.md`:
-
-```markdown
-# Project Current State
-
-**Project:** {{PROJECT_NAME}}
-**Type:** {{PROJECT_TYPE}}
-**Tech Stack:** {{TECH_STACK}}
-
-## Features Implemented
-
-- [ ] Feature 1
-- [ ] Feature 2
-
-## Current Focus
-
-Working on: Initial setup
-
-## Known Issues
-
-None yet
-```
-
-### Step 4: Remove Template Content
-
-Delete this README and create your own project README!
+Astro, React (Islands), Tailwind CSS, Framer Motion. Form kontak via Formspree/Web3Forms.
 
 ---
 
-## 📚 How It Works
+## 🧪 Checklist Fungsional
 
-### Memory System
+- Responsif (mobile/tablet/desktop)
+- Toggle tema (persist)
+- Animasi scroll (reveal)
+- Hover states di tombol/kartu
+- Filter proyek berfungsi
+- Form kontak mengirim sukses
 
-The AI automatically loads context from `.github/memory/` at every session start:
+## 🔎 SEO & Aksesibilitas (Quick Wins)
 
-1. **INDEX.md** - Quick overview & lookup
-2. **implementations/** - Recent work
-3. **decisions/** - Architecture choices
-4. **issues/** - Known bugs
-
-### Instruction Hierarchy
-
-```
-Priority 0: Memory Protocol (always check memory first)
-Priority 1: Critical Rules (test framework, file size limits)
-Priority 2: Project-specific patterns
-Priority 3: Best practices & guidelines
-```
-
-### Auto-Loading
-
-GitHub Copilot automatically reads `.github/copilot-instructions.md` in every chat session, giving the AI full project context without manual prompting.
+- Meta OG/Twitter + canonical di `BaseLayout.astro`
+- Gambar OG default: `public/og-default.png`
+- Skip link ke konten utama + focus-visible outline
+- Form kontak: honeypot sederhana + aria-live status
 
 ---
 
-## 🎯 Use Cases
+## 🔧 Konfigurasi Tambahan
 
-### Perfect For:
+Ganti endpoint Formspree/Web3Forms di `src/pages/contact.astro`. Ganti `public/resume.pdf` dengan
+resume asli.
 
-✅ **Web Applications** (React, Vue, Next.js)
-✅ **Backend APIs** (Node.js, Python, Go)
-✅ **Mobile Apps** (React Native, Flutter)
-✅ **CLI Tools** (Node.js, Python)
-✅ **Chatbots** (WhatsApp, Telegram, Discord)
-✅ **Data Science** (Python, Jupyter)
-✅ **DevOps** (Infrastructure as Code)
+### Atribusi Gambar
 
-### Adapt For:
-
-- Solo projects
-- Team collaboration
-- Client work
-- Open source
-- Internal tools
+- Sumber gambar sementara: Unsplash (lisensi bebas pakai, atribusi dihargai)
+- Chatbot: https://unsplash.com/photos/photo-1603354350317-6f7aaa591d35
+- Finansial: https://unsplash.com/photos/photo-1559526324-593bc073d938
+- Potret profesional: https://unsplash.com/photos/photo-1544005313-94ddf0286df2
 
 ---
 
-## 💡 Best Practices
+## � KPI
 
-### DO:
-
-✅ Update memory after major implementations
-✅ Document decisions in `decisions/`
-✅ Keep instructions modular and focused
-✅ Use placeholders for reusability
-✅ Commit memory changes to git
-
-### DON'T:
-
-❌ Hardcode project-specific values in template
-❌ Skip memory updates (causes context loss)
-❌ Mix multiple concerns in one instruction file
-❌ Forget to customize after cloning
+Bounce < 45%, Time on page > 90s, CTA ≥ 5%, Lighthouse ≥ 95 (desktop).
 
 ---
 
@@ -302,7 +185,8 @@ Check out these projects using this template:
 ## 💬 Support
 
 - **Issues:** [GitHub Issues](https://github.com/YOUR_USERNAME/ai-assistant-template/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/YOUR_USERNAME/ai-assistant-template/discussions)
+- **Discussions:**
+  [GitHub Discussions](https://github.com/YOUR_USERNAME/ai-assistant-template/discussions)
 
 ---
 

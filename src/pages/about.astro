@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+---
+<BaseLayout title="Tentang Saya — Muhammad Nurhidayat Gani">
+  <Header />
+  <main class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-bold mb-8">Tentang Saya</h1>
+    <div class="grid md:grid-cols-3 gap-10 items-start mb-16">
+      <div class="md:col-span-1">
+        <div class="aspect-square rounded-xl overflow-hidden bg-black/5 dark:bg-white/5">
+          <img 
+            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop" 
+            alt="Potret profesional Muhammad Nurhidayat Gani" 
+            class="w-full h-full object-cover" 
+            loading="lazy"
+            width="800"
+            height="800"
+          />
+        </div>
+      </div>
+      <div class="md:col-span-2 space-y-4 text-sm leading-relaxed text-black/70 dark:text-white/70">
+        <p>Saya Muhammad Nurhidayat Gani, sebelumnya seorang operator excavator profesional yang terbiasa dengan presisi struktural dan tanggung jawab tinggi di lapangan. Kini saya mentransfer prinsip ketelitian dan ketahanan sistem ke dunia pengembangan perangkat lunak.</p>
+        <p>Fokus saya: membangun antarmuka yang cepat, arsitektur modular, dan pengalaman pengguna yang jelas serta bermakna. Saya percaya solusi terbaik lahir dari kombinasi disiplin kerja dan desain yang berfokus pada kebutuhan nyata.</p>
+      </div>
+    </div>
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold mb-4">Keahlian</h2>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 text-xs">
+        <div>
+          <h3 class="font-semibold mb-2">Frontend</h3>
+          <div class="flex flex-wrap gap-2">{['Astro','React','Tailwind','Framer Motion','Next.js'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-2">Backend</h3>
+          <div class="flex flex-wrap gap-2">{['Node.js','Express','REST API'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-2">Database</h3>
+          <div class="flex flex-wrap gap-2">{['PostgreSQL','Redis','MongoDB'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-2">Tools</h3>
+          <div class="flex flex-wrap gap-2">{['Git','Docker','CI/CD','Jest'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-2">Prinsip</h3>
+          <div class="flex flex-wrap gap-2">{['Modularitas','Kinerja','Aksesibilitas','Keamanan'].map(t => <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/10" >{t}</span>)}</div>
+        </div>
+      </div>
+    </section>
+    <div class="mt-8">
+      <a href="/resume.pdf" class="px-4 py-2 border border-black/10 dark:border-white/20 rounded hover:border-accent text-xs">Unduh Resume</a>
+    </div>
+  </main>
+</BaseLayout>

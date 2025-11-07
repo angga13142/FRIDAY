@@ -1,0 +1,18 @@
+---
+import ThemeToggle from './ThemeToggle.jsx';
+const navItems = [
+  { href: '/', label: 'Beranda' },
+  { href: '/about', label: 'Tentang Saya' },
+  { href: '/projects', label: 'Proyek' },
+  { href: '/contact', label: 'Kontak' }
+];
+---
+<header class="sticky top-0 z-40 backdrop-blur bg-white/80 dark:bg-[#111]/80 border-b border-black/5 dark:border-white/10">
+  <nav class="max-w-5xl mx-auto flex items-center justify-between px-4 h-14">
+    <a href="/" class="font-bold tracking-tight text-lg">MNG</a>
+    <ul class="flex items-center gap-6 text-sm">
+      {navItems.map(item => <li><a class="hover:text-accent transition-colors" href={item.href}>{item.label}</a></li>)}
+      <li><ThemeToggle client:load /></li>
+    </ul>
+  </nav>
+</header>

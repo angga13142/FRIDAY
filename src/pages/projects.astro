@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import ProjectFilter from '../components/ProjectFilter.jsx';
+import projects from '../data/projects.json';
+---
+<BaseLayout title="Proyek — Muhammad Nurhidayat Gani">
+  <Header />
+  <main class="max-w-5xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-bold mb-8">Proyek</h1>
+    <ProjectFilter client:load projects={projects} />
+  </main>
+</BaseLayout>

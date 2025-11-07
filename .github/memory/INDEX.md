@@ -1,4 +1,4 @@
-# Memory Index - {{PROJECT_NAME}}
+# Memory Index - Personal Portfolio - Muhammad Nurhidayat Gani
 
 **Last Updated:** November 6, 2025  
 **Total Files:** 16 files organized in 4 categories

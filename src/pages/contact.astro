@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import ContactForm from '../components/ContactForm.jsx';
+---
+<BaseLayout title="Kontak — Muhammad Nurhidayat Gani">
+  <Header />
+  <main class="max-w-xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-bold mb-8">Kontak</h1>
+    <ContactForm client:load />
+    <section class="space-y-3 text-sm">
+      <p class="font-semibold">Sosial</p>
+      <ul class="space-y-2">
+        <li><a href="https://www.linkedin.com/in/mnhidayatgani" class="text-accent hover:underline" target="_blank">LinkedIn</a></li>
+        <li><a href="https://github.com/mnhidayatgani" class="text-accent hover:underline" target="_blank">GitHub</a></li>
+      </ul>
+    </section>
+  </main>
+</BaseLayout>
